@@ -1,0 +1,20 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "gt-fse-widgets-ctv/gt-fse-widgets-ctv",
+  "version": "0.1.0",
+  "title": "GT Widgets CTOUTVERT",
+  "category": "widgets",
+  "icon": "welcome-widgets-menus",
+  "description": "Un block pour afficher des widgets CTOUTVERT",
+  "example": {},
+  "supports": {
+    "html": false
+  },
+  "textdomain": "gt-fse-widgets-ctv",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php",
+  "viewScript": "file:./view.js"
+}
