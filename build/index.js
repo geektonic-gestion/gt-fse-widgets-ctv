@@ -18,43 +18,149 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./editor.scss */ "./src/editor.scss");
-
-/**
- * Retrieves the translation of text.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-i18n/
- */
-
-
-/**
- * React hook that is used to mark the block wrapper element.
- * It provides all the necessary props like the class name.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
- */
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/server-side-render */ "@wordpress/server-side-render");
+/* harmony import */ var _wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./editor.scss */ "./src/editor.scss");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_7__);
 
 
-/**
- * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
- * Those files can contain any CSS code that gets applied to the editor.
- *
- * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
- */
 
 
-/**
- * The edit function describes the structure of your block in the context of the
- * editor. This represents what the editor will render when the block is used.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-edit-save/#edit
- *
- * @return {Element} Element to render.
- */
-function Edit() {
-  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+
+
+
+
+function Edit({
+  attributes,
+  setAttributes
+}) {
+  // Destructure the attributes
+  const {
+    isMap,
+    isTarifs,
+    isList,
+    productId,
+    isProduct,
+    isSearchBar,
+    isSpecialOffers,
+    isNoteMoyenne,
+    isReviews,
+    isSearch,
+    isInventory,
+    isCalendarProduct
+  } = attributes;
+
+  // State to hold the global ID
+  const [globalId, setGlobalId] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_6__.useState)('');
+
+  // Options array with label-value pairs
+  const options = [{
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Liste', 'gt-fse-widgets-ctv'),
+    value: 'isList'
+  }, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('SearchBar', 'gt-fse-widgets-ctv'),
+    value: 'isSearchBar'
+  }, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Produit', 'gt-fse-widgets-ctv'),
+    value: 'isProduct'
+  }, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Map', 'gt-fse-widgets-ctv'),
+    value: 'isMap'
+  }, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Tarifs', 'gt-fse-widgets-ctv'),
+    value: 'isTarifs'
+  }, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Offres spéciales', 'gt-fse-widgets-ctv'),
+    value: 'isSpecialOffers'
+  }, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Note moyenne', 'gt-fse-widgets-ctv'),
+    value: 'isNoteMoyenne'
+  }, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Avis', 'gt-fse-widgets-ctv'),
+    value: 'isReviews'
+  }, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Recherche', 'gt-fse-widgets-ctv'),
+    value: 'isSearch'
+  }, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Inventaire', 'gt-fse-widgets-ctv'),
+    value: 'isInventory'
+  }, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Calendrier produit', 'gt-fse-widgets-ctv'),
+    value: 'isCalendarProduct'
+  }];
+
+  // Determine the currently selected option
+  let selectedOption = '';
+  if (isMap) selectedOption = 'isMap';else if (isTarifs) selectedOption = 'isTarifs';else if (isList) selectedOption = 'isList';else if (isProduct) selectedOption = 'isProduct';else if (isSearchBar) selectedOption = 'isSearchBar';else if (isSpecialOffers) selectedOption = 'isSpecialOffers';else if (isNoteMoyenne) selectedOption = 'isNoteMoyenne';else if (isReviews) selectedOption = 'isReviews';else if (isSearch) selectedOption = 'isSearch';else if (isInventory) selectedOption = 'isInventory';else if (isCalendarProduct) selectedOption = 'isCalendarProduct';
+
+  // Fetch the post meta _gt_ctv_global_id
+  const postMeta = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_7__.useSelect)(select => select('core/editor').getEditedPostAttribute('meta'), []);
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_6__.useEffect)(() => {
+    if (postMeta && postMeta._gt_ctv_global_id) {
+      setGlobalId(postMeta._gt_ctv_global_id);
+    }
+  }, [postMeta]);
+
+  // Handle option change
+  const handleOptionChange = option => {
+    setAttributes({
+      isSearchBar: option === 'isSearchBar',
+      isMap: option === 'isMap',
+      isTarifs: option === 'isTarifs',
+      isList: option === 'isList',
+      isProduct: option === 'isProduct',
+      isSpecialOffers: option === 'isSpecialOffers',
+      isNoteMoyenne: option === 'isNoteMoyenne',
+      isReviews: option === 'isReviews',
+      isSearch: option === 'isSearch',
+      isInventory: option === 'isInventory',
+      isCalendarProduct: option === 'isCalendarProduct'
+    });
+  };
+  const handleIdChange = id => {
+    if (id === '') {
+      id = 0;
+    }
+    setAttributes({
+      productId: id
+    });
+  };
+
+  // Find the label for the selected option
+  const selectedOptionLabel = options.find(option => option.value === selectedOption)?.label || (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Aucun widget sélectionné', 'gt-fse-widgets-ctv');
+
+  // Render the block editor UI
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     ...(0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps)()
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('GT Widgets CTOUTVERT – hello from the editor!', 'gt-fse-widgets-ctv'));
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Settings', 'gt-fse-widgets-ctv')
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.RadioControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Quel widget afficher ?', 'gt-fse-widgets-ctv'),
+    selected: selectedOption,
+    options: options,
+    onChange: handleOptionChange
+  }), (isTarifs || !selectedOption || isProduct || isInventory || isReviews || isCalendarProduct) && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.__experimentalNumberControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Product ID', 'gt-fse-widgets-ctv'),
+    value: productId,
+    onChange: id => handleIdChange(id),
+    min: 0,
+    defaultValue: 0
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextareaControl, {
+    label: "Data-attributes",
+    help: "Ajouter des data-attribtues pour le widget",
+    value: attributes.dataAttributes,
+    onChange: dataAttributes => setAttributes({
+      dataAttributes
+    })
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
+    href: "https://reservation.secureholiday.net/fr/" + globalId + "/documentation/widgets/",
+    target: "_blank"
+  }, "Lire la documentation")))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Widget CTOUTVERT : ', 'gt-fse-widgets-ctv'), " ", selectedOptionLabel));
 }
 
 /***/ }),
@@ -161,6 +267,36 @@ module.exports = window["wp"]["blocks"];
 
 /***/ }),
 
+/***/ "@wordpress/components":
+/*!************************************!*\
+  !*** external ["wp","components"] ***!
+  \************************************/
+/***/ ((module) => {
+
+module.exports = window["wp"]["components"];
+
+/***/ }),
+
+/***/ "@wordpress/data":
+/*!******************************!*\
+  !*** external ["wp","data"] ***!
+  \******************************/
+/***/ ((module) => {
+
+module.exports = window["wp"]["data"];
+
+/***/ }),
+
+/***/ "@wordpress/element":
+/*!*********************************!*\
+  !*** external ["wp","element"] ***!
+  \*********************************/
+/***/ ((module) => {
+
+module.exports = window["wp"]["element"];
+
+/***/ }),
+
 /***/ "@wordpress/i18n":
 /*!******************************!*\
   !*** external ["wp","i18n"] ***!
@@ -171,13 +307,23 @@ module.exports = window["wp"]["i18n"];
 
 /***/ }),
 
+/***/ "@wordpress/server-side-render":
+/*!******************************************!*\
+  !*** external ["wp","serverSideRender"] ***!
+  \******************************************/
+/***/ ((module) => {
+
+module.exports = window["wp"]["serverSideRender"];
+
+/***/ }),
+
 /***/ "./src/block.json":
 /*!************************!*\
   !*** ./src/block.json ***!
   \************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"gt-fse-widgets-ctv/gt-fse-widgets-ctv","version":"0.1.0","title":"GT Widgets CTOUTVERT","category":"widgets","icon":"welcome-widgets-menus","description":"Un block pour afficher des widgets CTOUTVERT","example":{},"supports":{"html":false},"textdomain":"gt-fse-widgets-ctv","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php","viewScript":"file:./view.js"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"gt/gt-fse-widgets-ctv","version":"1.0.0","title":"GT Widgets CTOUTVERT","category":"widgets","icon":"welcome-widgets-menus","description":"Un block pour afficher des widgets CTOUTVERT","example":{},"supports":{"html":false},"attributes":{"isSearchBar":{"type":"boolean","default":false},"isList":{"type":"boolean","default":true},"isProduct":{"type":"boolean","default":false},"isMap":{"type":"boolean","default":false},"isTarifs":{"type":"boolean","default":false},"isSpecialOffers":{"type":"boolean","default":false},"isNoteMoyenne":{"type":"boolean","default":false},"isReviews":{"type":"boolean","default":false},"isSearch":{"type":"boolean","default":false},"isInventory":{"type":"boolean","default":false},"isCalendarProduct":{"type":"boolean","default":false},"productId":{"type":"number","default":0},"dataAttributes":{"type":"string","default":""}},"textdomain":"gt-fse-widgets-ctv","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php","viewScript":"file:./view.js"}');
 
 /***/ })
 

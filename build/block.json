@@ -1,8 +1,8 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
-  "name": "gt-fse-widgets-ctv/gt-fse-widgets-ctv",
-  "version": "0.1.0",
+  "name": "gt/gt-fse-widgets-ctv",
+  "version": "1.0.0",
   "title": "GT Widgets CTOUTVERT",
   "category": "widgets",
   "icon": "welcome-widgets-menus",
@@ -10,6 +10,60 @@
   "example": {},
   "supports": {
     "html": false
+  },
+  "attributes": {
+    "isSearchBar": {
+      "type": "boolean",
+      "default": false
+    },
+    "isList": {
+      "type": "boolean",
+      "default": true
+    },
+    "isProduct": {
+      "type": "boolean",
+      "default": false
+    },
+    "isMap": {
+      "type": "boolean",
+      "default": false
+    },
+    "isTarifs": {
+      "type": "boolean",
+      "default": false
+    },
+    "isSpecialOffers": {
+      "type": "boolean",
+      "default": false
+    },
+    "isNoteMoyenne": {
+      "type": "boolean",
+      "default": false
+    },
+    "isReviews": {
+      "type": "boolean",
+      "default": false
+    },
+    "isSearch": {
+      "type": "boolean",
+      "default": false
+    },
+    "isInventory": {
+      "type": "boolean",
+      "default": false
+    },
+    "isCalendarProduct": {
+      "type": "boolean",
+      "default": false
+    },
+    "productId": {
+      "type": "number",
+      "default": 0
+    },
+    "dataAttributes": {
+      "type": "string",
+      "default": ""
+    }
   },
   "textdomain": "gt-fse-widgets-ctv",
   "editorScript": "file:./index.js",
