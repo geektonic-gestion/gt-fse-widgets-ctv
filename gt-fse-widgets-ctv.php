@@ -4,7 +4,7 @@
  * Description:       Un block pour afficher des widgets CTOUTVERT
  * Requires at least: 6.1
  * Requires PHP:      7.0
- * Version:           1.0.0
+ * Version:           1.0.1
  * Author:            The WordPress Contributors
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -206,6 +206,20 @@ function gt_ctv_register_meta() {
     ));
 }
 add_action('init', 'gt_ctv_register_meta');
+
+function gt_ctv_register_rest_endpoint() {
+    register_rest_route('gt-ctv/v1', '/global-id', array(
+        'methods' => 'GET',
+        'callback' => 'gt_ctv_get_global_id',
+    ));
+}
+
+function gt_ctv_get_global_id() {
+    return get_option('gt_ctv_global_id', '');
+}
+
+add_action('rest_api_init', 'gt_ctv_register_rest_endpoint');
+
 
 
 // Register scripts

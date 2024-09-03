@@ -20,15 +20,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/server-side-render */ "@wordpress/server-side-render");
-/* harmony import */ var _wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./editor.scss */ "./src/editor.scss");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_7__);
-
-
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./editor.scss */ "./src/editor.scss");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_5__);
 
 
 
@@ -56,7 +50,7 @@ function Edit({
   } = attributes;
 
   // State to hold the global ID
-  const [globalId, setGlobalId] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_6__.useState)('');
+  const [globalId, setGlobalId] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_5__.useState)('');
 
   // Options array with label-value pairs
   const options = [{
@@ -98,13 +92,14 @@ function Edit({
   let selectedOption = '';
   if (isMap) selectedOption = 'isMap';else if (isTarifs) selectedOption = 'isTarifs';else if (isList) selectedOption = 'isList';else if (isProduct) selectedOption = 'isProduct';else if (isSearchBar) selectedOption = 'isSearchBar';else if (isSpecialOffers) selectedOption = 'isSpecialOffers';else if (isNoteMoyenne) selectedOption = 'isNoteMoyenne';else if (isReviews) selectedOption = 'isReviews';else if (isSearch) selectedOption = 'isSearch';else if (isInventory) selectedOption = 'isInventory';else if (isCalendarProduct) selectedOption = 'isCalendarProduct';
 
-  // Fetch the post meta _gt_ctv_global_id
-  const postMeta = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_7__.useSelect)(select => select('core/editor').getEditedPostAttribute('meta'), []);
-  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_6__.useEffect)(() => {
-    if (postMeta && postMeta._gt_ctv_global_id) {
-      setGlobalId(postMeta._gt_ctv_global_id);
-    }
-  }, [postMeta]);
+  // Fetch the global ID using the REST API
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_5__.useEffect)(() => {
+    fetch('/wp-json/gt-ctv/v1/global-id').then(response => response.json()).then(data => {
+      setGlobalId(data);
+    }).catch(error => {
+      console.error('Error fetching global ID:', error);
+    });
+  }, []);
 
   // Handle option change
   const handleOptionChange = option => {
@@ -160,7 +155,11 @@ function Edit({
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
     href: "https://reservation.secureholiday.net/fr/" + globalId + "/documentation/widgets/",
     target: "_blank"
-  }, "Lire la documentation")))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Widget CTOUTVERT : ', 'gt-fse-widgets-ctv'), " ", selectedOptionLabel));
+  }, "Lire la documentation")))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", {
+    style: {
+      textAlign: 'center'
+    }
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Widget CTOUTVERT : ', 'gt-fse-widgets-ctv'), " ", selectedOptionLabel));
 }
 
 /***/ }),
@@ -277,16 +276,6 @@ module.exports = window["wp"]["components"];
 
 /***/ }),
 
-/***/ "@wordpress/data":
-/*!******************************!*\
-  !*** external ["wp","data"] ***!
-  \******************************/
-/***/ ((module) => {
-
-module.exports = window["wp"]["data"];
-
-/***/ }),
-
 /***/ "@wordpress/element":
 /*!*********************************!*\
   !*** external ["wp","element"] ***!
@@ -307,23 +296,13 @@ module.exports = window["wp"]["i18n"];
 
 /***/ }),
 
-/***/ "@wordpress/server-side-render":
-/*!******************************************!*\
-  !*** external ["wp","serverSideRender"] ***!
-  \******************************************/
-/***/ ((module) => {
-
-module.exports = window["wp"]["serverSideRender"];
-
-/***/ }),
-
 /***/ "./src/block.json":
 /*!************************!*\
   !*** ./src/block.json ***!
   \************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"gt/gt-fse-widgets-ctv","version":"1.0.0","title":"GT Widgets CTOUTVERT","category":"widgets","icon":"welcome-widgets-menus","description":"Un block pour afficher des widgets CTOUTVERT","example":{},"supports":{"html":false},"attributes":{"isSearchBar":{"type":"boolean","default":false},"isList":{"type":"boolean","default":true},"isProduct":{"type":"boolean","default":false},"isMap":{"type":"boolean","default":false},"isTarifs":{"type":"boolean","default":false},"isSpecialOffers":{"type":"boolean","default":false},"isNoteMoyenne":{"type":"boolean","default":false},"isReviews":{"type":"boolean","default":false},"isSearch":{"type":"boolean","default":false},"isInventory":{"type":"boolean","default":false},"isCalendarProduct":{"type":"boolean","default":false},"productId":{"type":"number","default":0},"dataAttributes":{"type":"string","default":""}},"textdomain":"gt-fse-widgets-ctv","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php","viewScript":"file:./view.js"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"gt/gt-fse-widgets-ctv","version":"1.0.1","title":"GT Widgets CTOUTVERT","category":"widgets","icon":"welcome-widgets-menus","description":"Un block pour afficher des widgets CTOUTVERT","example":{},"supports":{"html":false},"attributes":{"isSearchBar":{"type":"boolean","default":false},"isList":{"type":"boolean","default":true},"isProduct":{"type":"boolean","default":false},"isMap":{"type":"boolean","default":false},"isTarifs":{"type":"boolean","default":false},"isSpecialOffers":{"type":"boolean","default":false},"isNoteMoyenne":{"type":"boolean","default":false},"isReviews":{"type":"boolean","default":false},"isSearch":{"type":"boolean","default":false},"isInventory":{"type":"boolean","default":false},"isCalendarProduct":{"type":"boolean","default":false},"productId":{"type":"number","default":0},"dataAttributes":{"type":"string","default":""}},"textdomain":"gt-fse-widgets-ctv","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php","viewScript":"file:./view.js"}');
 
 /***/ })
 
