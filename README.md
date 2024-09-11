@@ -9,6 +9,7 @@ Le plugin **GT Widgets CTOUTVERT** permet d'intégrer facilement divers widgets 
 ## Fonctionnalités
 
 - **Widgets configurables** : Choisissez parmi plusieurs widgets comme la liste, la barre de recherche, les produits, les cartes, les tarifs, et bien plus encore.
+- **Barre de réservation sticky** : Nouvelle fonctionnalité permettant d'afficher une barre de réservation sticky avec des options de personnalisation avancées, telles que la couleur du texte et du fond, ainsi que la gestion d'images avant et après les boutons d'ouverture et de fermeture.
 - **Support des attributs data** : Ajoutez des attributs data personnalisés pour chaque widget.
 - **Options globales et par post** : Configurez des identifiants globaux et des options de groupe qui peuvent être surchargés au niveau de chaque post.
 - **Support des meta-boxes** : Gère les meta-boxes pour tous les types de posts publics.
@@ -32,6 +33,14 @@ Après avoir activé le plugin, vous pouvez configurer les options globales dans
 ### Utilisation dans les Posts
 
 Dans l'éditeur de blocs, vous pouvez ajouter un bloc **GT Widgets CTOUTVERT**. Sélectionnez le widget que vous souhaitez afficher et personnalisez-le en utilisant les différentes options disponibles.
+
+### Barre de réservation sticky
+
+La barre de réservation sticky permet d'ajouter une interface de réservation à affichage permanent sur vos pages. Vous pouvez personnaliser :
+
+- La couleur du texte et du fond des boutons d'ouverture et de fermeture.
+- Des images peuvent être placées avant et après les boutons pour personnaliser encore davantage l'apparence.
+- Les dates d'arrivée et de départ sont configurables et synchronisées automatiquement avec des cookies.
 
 ### Data Attributes
 
