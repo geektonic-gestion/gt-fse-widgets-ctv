@@ -4,7 +4,7 @@
  * Description:       Un block pour afficher des widgets CTOUTVERT
  * Requires at least: 6.1
  * Requires PHP:      7.0
- * Version:           1.0.1
+ * Version:           1.0.2
  * Author:            The WordPress Contributors
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -19,9 +19,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // Register the block
 function gt_fse_widgets_ctv_gt_fse_widgets_ctv_block_init() {
-	register_block_type( __DIR__ . '/build' );
+    register_block_type( __DIR__ . '/build');
 }
+
 add_action( 'init', 'gt_fse_widgets_ctv_gt_fse_widgets_ctv_block_init' );
+
+
+// Register the script and style
+// function gt_fse_widgets_ctv_register_scripts() {
+//     wp_register_script( 'gt-caleran-moment', plugin_dir_url( __FILE__ ) . 'lib/caleran/vendor/moment.min.js', array(), '1.4.20', true );
+//     wp_register_script( 'gt-caleran-script', plugin_dir_url( __FILE__ ) . 'lib/caleran/js/caleran.min.js', array('gt-caleran-moment'), '1.4.20', true );
+//     wp_register_style( 'gt-caleran-style', plugin_dir_url( __FILE__ ) . 'lib/caleran/css/caleran.min.css', array(), '1.4.20' );
+// }
+// add_action( 'wp_enqueue_scripts', 'gt_fse_widgets_ctv_register_scripts' );
 
 // Add the settings page
 function gt_ctv_add_settings_page() {

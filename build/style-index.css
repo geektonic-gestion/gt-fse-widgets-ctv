@@ -1,4 +1,187 @@
 /*!***************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/style.scss ***!
   \***************************************************************************************************************************************************************************************************************************************/
+.gt-widgets-ctv-resa * {
+  font-size: inherit;
+}
+.gt-widgets-ctv-resa:not(.admin) {
+  position: fixed;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  transition: 0.2s ease-in-out;
+  z-index: 99;
+}
+.gt-widgets-ctv-resa .masked-image {
+  height: 1.5rem;
+  width: 1.5rem;
+  background-color: currentColor; /* Use current text color */
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+.gt-widgets-ctv-resa__toggle, .gt-widgets-ctv-resa__hide {
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  line-height: 1;
+  gap: 0.5rem;
+  font-size: 1.2rem;
+  text-align: center;
+  justify-content: center;
+  margin: 0 auto;
+  cursor: pointer;
+  overflow: hidden;
+  z-index: 9;
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: 0.2s ease-in-out 0.1s;
+  z-index: 1;
+}
+.gt-widgets-ctv-resa__toggle::after, .gt-widgets-ctv-resa__hide::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 150%;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.6) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  opacity: 0;
+  transition: 0.4s ease-in-out 0.1s;
+  transform: translateY(-50%);
+  z-index: -1;
+}
+.gt-widgets-ctv-resa__toggle:hover, .gt-widgets-ctv-resa__hide:hover {
+  background-color: color-mix(in srgb, var(--wp--preset--color--base) 90%, transparent);
+}
+.gt-widgets-ctv-resa__toggle:hover::after, .gt-widgets-ctv-resa__hide:hover::after {
+  opacity: 0.1;
+  height: 100%;
+}
+.gt-widgets-ctv-resa__toggle img, .gt-widgets-ctv-resa__hide img {
+  width: 3rem;
+}
+.gt-widgets-ctv-resa__toggle {
+  transform: translateY(100%) translateX(-50%);
+}
+.gt-widgets-ctv-resa__toggle.open {
+  transform: translateY(0) translateX(-50%);
+}
+.gt-widgets-ctv-resa__hide {
+  opacity: 0;
+  transform: translateY(100%) translateX(-50%);
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+}
+.gt-widgets-ctv-resa__form {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  padding: 0 1rem;
+  z-index: 2;
+  position: relative;
+}
+.gt-widgets-ctv-resa__form .masked-image {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+}
+.gt-widgets-ctv-resa__form .masked-image:first-child {
+  right: inherit;
+  left: 1rem;
+}
+.gt-widgets-ctv-resa__form__entry {
+  width: 16rem;
+  height: 4rem;
+  position: relative;
+  cursor: pointer;
+}
+.gt-widgets-ctv-resa__form__entry:nth-child(1)::after, .gt-widgets-ctv-resa__form__entry:nth-child(2)::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: -1rem;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 2rem;
+  background-color: rgba(255, 255, 255, 0.4);
+}
+.gt-widgets-ctv-resa__form__entry input, .gt-widgets-ctv-resa__form__entry button, .gt-widgets-ctv-resa__form__entry select, .gt-widgets-ctv-resa__form__entry button, .gt-widgets-ctv-resa__form__entry .gtButtonLike, .gt-widgets-ctv-resa__form__entry .gtInputLike {
+  padding: 0 0.5rem;
+  margin: 0;
+  background: transparent;
+  border: none;
+  color: currentColor;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  outline: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  z-index: 1;
+  cursor: pointer;
+}
+.gt-widgets-ctv-resa__form__entry--submit {
+  background-color: var(--wp--preset--color--contrast);
+  transition: 0.2s ease-in-out;
+}
+.gt-widgets-ctv-resa__form__entry--submit button {
+  padding-left: 1rem !important;
+}
+.gt-widgets-ctv-resa__form__entry--submit img {
+  transition: 0.2s ease-in-out 0.1s;
+}
+.gt-widgets-ctv-resa__form__entry--submit:hover {
+  background-color: var(--wp--preset--color--accent);
+}
+.gt-widgets-ctv-resa__form__entry--submit:hover img {
+  right: 0.75rem;
+}
+.gt-widgets-ctv-resa--open {
+  transform: translateY(-100%);
+}
+.gt-widgets-ctv-resa--open .gt-widgets-ctv-resa__toggle {
+  transform: translateY(100%) translateX(-50%);
+  opacity: 0;
+}
+.gt-widgets-ctv-resa--open .gt-widgets-ctv-resa__hide {
+  transform: translateY(0%) translateX(-50%);
+  opacity: 1;
+}
 
+@media (max-width: 781px) {
+  .gt-widgets-ctv-resa__toggle {
+    width: 100% !important;
+    max-width: 25rem !important;
+  }
+  .gt-widgets-ctv-resa__form {
+    flex-direction: column;
+    gap: 0;
+    padding: 1rem;
+  }
+  .gt-widgets-ctv-resa__form__entry {
+    width: 100%;
+  }
+  .gt-widgets-ctv-resa__form__entry::after {
+    content: none !important;
+  }
+  .gt-widgets-ctv-resa__form__entry input {
+    padding: 0;
+  }
+  body {
+    padding-bottom: 5rem;
+  }
+}
+
+/*# sourceMappingURL=style-index.css.map*/
