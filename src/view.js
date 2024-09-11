@@ -122,7 +122,7 @@ import { __ } from '@wordpress/i18n';
     });
     
     function inTwoHours(){
-        time = new Date();
+        let time = new Date();
         time.setHours( time.getHours() + 2 );
         return time;
     }

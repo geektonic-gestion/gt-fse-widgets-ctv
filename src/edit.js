@@ -226,7 +226,7 @@ export default function Edit({ attributes, setAttributes }) {
                 </PanelBody>
                 {isGtResaSticky && (
                     <>
-                    <PanelBody title={__('Bouton ouverture', 'gt-fse-widgets-ctv')}>
+                    <PanelBody title={__('Bouton ouverture', 'gt-fse-widgets-ctv')} initialOpen={false} >
                         {renderColorPalette(
                             __('Couleur du texte', 'gt-fse-widgets-ctv'),
                             openButtonTextColor,
@@ -241,7 +241,7 @@ export default function Edit({ attributes, setAttributes }) {
                         {renderImageControl(__('Image après', 'gt-fse-widgets-ctv'), openImageAfter, (newId) => setAttributes({ openImageAfter: newId }), 'openImageAfterUrl')}
                     </PanelBody>
 
-                    <PanelBody title={__('Bouton fermeture', 'gt-fse-widgets-ctv')}>
+                    <PanelBody title={__('Bouton fermeture', 'gt-fse-widgets-ctv')} initialOpen={false} >
                         {renderColorPalette(
                             __('Couleur du texte', 'gt-fse-widgets-ctv'),
                             closeButtonTextColor,
@@ -256,7 +256,7 @@ export default function Edit({ attributes, setAttributes }) {
                         {renderImageControl(__('Image après', 'gt-fse-widgets-ctv'), closeImageAfter, (newId) => setAttributes({ closeImageAfter: newId }), 'closeImageAfterUrl')}
                     </PanelBody>
 
-                    <PanelBody title={__('Input Dates', 'gt-fse-widgets-ctv')}>
+                    <PanelBody title={__('Input Dates', 'gt-fse-widgets-ctv')} initialOpen={false} >
                         {renderColorPalette(
                             __('Couleur du texte', 'gt-fse-widgets-ctv'),
                             inputTextColor,
@@ -266,7 +266,7 @@ export default function Edit({ attributes, setAttributes }) {
                         {renderImageControl(__('Image après', 'gt-fse-widgets-ctv'), inputImageAfter, (newId) => setAttributes({ inputImageAfter: newId }), 'inputImageAfterUrl')}
                     </PanelBody>
 
-                    <PanelBody title={__('Nombre de personnes', 'gt-fse-widgets-ctv')}>
+                    <PanelBody title={__('Nombre de personnes', 'gt-fse-widgets-ctv')} initialOpen={false} >
                         {renderColorPalette(
                             __('Couleur du texte', 'gt-fse-widgets-ctv'),
                             selectTextColor,
@@ -276,7 +276,7 @@ export default function Edit({ attributes, setAttributes }) {
                         {renderImageControl(__('Image After Select', 'gt-fse-widgets-ctv'), selectImageAfter, (newId) => setAttributes({ selectImageAfter: newId }), 'selectImageAfterUrl')}
                     </PanelBody>
 
-                    <PanelBody title={__('Bouton recherche', 'gt-fse-widgets-ctv')}>
+                    <PanelBody title={__('Bouton recherche', 'gt-fse-widgets-ctv')} initialOpen={false} >
                         {renderColorPalette(
                             __('Couleur du texte', 'gt-fse-widgets-ctv'),
                             buttonTextColor,
