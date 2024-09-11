@@ -3,6 +3,8 @@
   \***************************************************************************************************************************************************************************************************************************************/
 .gt-widgets-ctv-resa * {
   font-size: inherit;
+  box-sizing: border-box;
+  font-weight: inherit;
 }
 .gt-widgets-ctv-resa:not(.admin) {
   position: fixed;
@@ -136,8 +138,16 @@
   background-color: var(--wp--preset--color--contrast);
   transition: 0.2s ease-in-out;
 }
-.gt-widgets-ctv-resa__form__entry--submit button {
+.gt-widgets-ctv-resa__form__entry--submit button, .gt-widgets-ctv-resa__form__entry--submit .gtButtonLike {
   padding-left: 1rem !important;
+}
+.gt-widgets-ctv-resa__form__entry--submit button:only-child, .gt-widgets-ctv-resa__form__entry--submit .gtButtonLike:only-child {
+  text-align: center;
+  justify-content: center;
+}
+.gt-widgets-ctv-resa__form__entry--submit button:last-child, .gt-widgets-ctv-resa__form__entry--submit .gtButtonLike:last-child {
+  text-align: center;
+  justify-content: center;
 }
 .gt-widgets-ctv-resa__form__entry--submit img {
   transition: 0.2s ease-in-out 0.1s;

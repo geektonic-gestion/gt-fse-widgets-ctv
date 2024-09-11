@@ -1,3 +1,6 @@
+import { __ } from '@wordpress/i18n';
+
+
 (function($){
 
     // Check if elements with the class '.gt-widgets-ctv-resa' exist on the page
@@ -87,6 +90,10 @@
                 endDate:departure,
                 autoCloseOnSelect:true,
                 minDate:opening,
+                calendarCount: $(window).width() < 768 ? 1 : 2,
+                locale:$('html').attr('lang').split('-')[0],
+                cancelLabel:__('Annuler', 'gt-fse-widgets-ctv'),
+                applyLabel:__('Appliquer', 'gt-fse-widgets-ctv'),
                 // maxDate:closing > moment() ? closing : null,
                 oninit: function(caleran){
                     let arrival = moment(caleran.config.startDate).format('YYYY-MM-DD');

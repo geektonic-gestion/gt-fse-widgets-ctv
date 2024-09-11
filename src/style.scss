@@ -2,6 +2,8 @@
 
     *{
         font-size: inherit;
+        box-sizing: border-box;
+        font-weight: inherit;
     }
 
     &:not(.admin){
@@ -154,8 +156,18 @@
             &--submit{
                 background-color: var(--wp--preset--color--contrast);
                 transition: 0.2s ease-in-out;
-                button{
+                button, .gtButtonLike{
                     padding-left:1rem!important;
+
+                    &:only-child{
+                        text-align: center;
+                        justify-content:center;
+                    }
+
+                    &:last-child{
+                        text-align: center;
+                        justify-content: center;
+                    }
                 }
 
                 img{

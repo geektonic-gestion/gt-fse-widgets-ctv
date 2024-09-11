@@ -158,10 +158,15 @@ export default function Edit({ attributes, setAttributes }) {
             </MediaUploadCheck>
             {imageId && (
                 <>
-                    <img src={imageUrls[imageUrlKey]} alt={label} style={{ maxWidth: '100%', marginTop: '10px' }} />
+                    <div>
+                        <img src={imageUrls[imageUrlKey]} alt={label} style={{ maxWidth: '50px', marginTop: '10px' }} />
+                    </div>
                     <Button
                         isDestructive
-                        onClick={() => onChangeCallback(null)} // Clear the image by setting it to null
+                        onClick={() => {
+                            onChangeCallback(null); // Set the image attribute to 0 or undefined to clear it
+                            setImageUrls((prev) => ({ ...prev, [imageUrlKey]: null })); // Clear the image URL in the state
+                        }}                       
                         style={{ marginTop: '10px' }}
                     >
                         {__('Delete Image', 'gt-fse-widgets-ctv')}
