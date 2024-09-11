@@ -134,6 +134,9 @@
   z-index: 1;
   cursor: pointer;
 }
+.gt-widgets-ctv-resa__form__entry input {
+  caret-color: transparent;
+}
 .gt-widgets-ctv-resa__form__entry--submit {
   background-color: var(--wp--preset--color--contrast);
   transition: 0.2s ease-in-out;
