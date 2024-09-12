@@ -226,6 +226,13 @@ export default function Edit({ attributes, setAttributes }) {
                 </PanelBody>
                 {isGtResaSticky && (
                     <>
+                    <PanelBody title={__('Global', 'gt-fse-widgets-ctv')} >
+                        {renderColorPalette(
+                            __('Couleur du fond', 'gt-fse-widgets-ctv'),
+                            backgroundColor,
+                            (newColor) => handleColorChange(newColor, 'backgroundColor')
+                        )}
+                    </PanelBody>
                     <PanelBody title={__('Bouton ouverture', 'gt-fse-widgets-ctv')} initialOpen={false} >
                         {renderColorPalette(
                             __('Couleur du texte', 'gt-fse-widgets-ctv'),
