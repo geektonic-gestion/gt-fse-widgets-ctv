@@ -5,7 +5,7 @@
 
 	<?php elseif($attributes['isTarifs']): ?>
 		<?php if($attributes['productId'] && $attributes['productId'] !== 0): ?>
-			<ctv-availability data-background-color="#FFFFFFFF" data-product-id="<?php $attributes['productId']; ?>" <?php echo $attributes['dataAttributes']; ?>></ctv-availability>
+			<ctv-availability data-background-color="#FFFFFFFF" data-product-id="<?php echo $attributes['productId']; ?>" <?php echo $attributes['dataAttributes']; ?>></ctv-availability>
 
 		<?php else: ?>
 			<ctv-availability data-background-color="#FFFFFFFF" <?php echo $attributes['dataAttributes']; ?>></ctv-availability>		
@@ -24,19 +24,19 @@
 		<ctv-reviews data-modal-position="bottom" <?php echo $attributes['dataAttributes']; ?> ></ctv-reviews>
 
 	<?php elseif($attributes['isReviews']): ?>
-		<ctv-reviews-list data-product-id="<?php $attributes['productId']; ?>" <?php echo $attributes['dataAttributes']; ?>></ctv-reviews-list>
+		<ctv-reviews-list data-product-id="<?php echo $attributes['productId']; ?>" <?php echo $attributes['dataAttributes']; ?>></ctv-reviews-list>
 
 	<?php elseif($attributes['isSearch']): ?>
 		<ctv-search <?php echo $attributes['dataAttributes']; ?>></ctv-search>
 
 	<?php elseif($attributes['isInventory']): ?>
-		<ctv-inventory data-product-id="<?php $attributes['productId']; ?>" <?php echo $attributes['dataAttributes']; ?>></ctv-inventory>
+		<ctv-inventory data-product-id="<?php echo $attributes['productId']; ?>" <?php echo $attributes['dataAttributes']; ?>></ctv-inventory>
 
 	<?php elseif($attributes['isCalendarProduct']): ?>
-		<ctv-product-search data-product-id="<?php $attributes['productId']; ?>" <?php echo $attributes['dataAttributes']; ?>></ctv-product-search>
+		<ctv-product-search data-product-id="<?php echo $attributes['productId']; ?>" <?php echo $attributes['dataAttributes']; ?>></ctv-product-search>
 
 	<?php elseif($attributes['productId']): ?>
-		<ctv-product data-product-id="<?php $attributes['productId']; ?>" <?php echo $attributes['dataAttributes']; ?>></ctv-product>
+		<ctv-product data-product-id="<?php echo $attributes['productId']; ?>" <?php echo $attributes['dataAttributes']; ?>></ctv-product>
 
 	<?php elseif ( $attributes['isGtResaSticky'] ): ?>
 		<div class="gt-widgets-ctv-resa">
