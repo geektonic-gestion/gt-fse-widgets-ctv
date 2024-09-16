@@ -40,7 +40,6 @@ function Edit({
     isMap,
     isTarifs,
     isList,
-    productId,
     isProduct,
     isSearchBar,
     isSpecialOffers,
@@ -239,11 +238,10 @@ function Edit({
     onChange: handleOptionChange
   }), (isTarifs || isProduct || isInventory || isReviews || isCalendarProduct) && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.__experimentalNumberControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Product ID', 'gt-fse-widgets-ctv'),
-    value: productId,
-    onChange: id => setAttributes({
-      productId: id || 0
-    }),
-    min: 0
+    value: parseInt(attributes.productId),
+    onChange: productId => setAttributes({
+      productId: parseInt(productId)
+    })
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextareaControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Data-attributes', 'gt-fse-widgets-ctv'),
     help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Ajouter des data-attribtues pour le widget', 'gt-fse-widgets-ctv'),
@@ -536,7 +534,7 @@ module.exports = window["wp"]["i18n"];
   \************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"gt/gt-fse-widgets-ctv","version":"1.0.8","title":"GT Widgets CTOUTVERT","category":"widgets","icon":"welcome-widgets-menus","description":"Un block pour afficher des widgets CTOUTVERT","example":{},"supports":{"html":false,"typography":{"fontSize":true,"fontFamily":true,"lineHeight":true,"fontWeight":true}},"attributes":{"isSearchBar":{"type":"boolean","default":false},"isList":{"type":"boolean","default":true},"isProduct":{"type":"boolean","default":false},"isMap":{"type":"boolean","default":false},"isTarifs":{"type":"boolean","default":false},"isSpecialOffers":{"type":"boolean","default":false},"isNoteMoyenne":{"type":"boolean","default":false},"isReviews":{"type":"boolean","default":false},"isSearch":{"type":"boolean","default":false},"isInventory":{"type":"boolean","default":false},"isCalendarProduct":{"type":"boolean","default":false},"isGtResaSticky":{"type":"boolean","default":false},"productId":{"type":"number","default":0},"dataAttributes":{"type":"string","default":""},"backgroundColor":{"type":"string","default":""},"buttonBackgroundColor":{"type":"string","default":""},"titleText":{"type":"string","default":""},"closeText":{"type":"string","default":""},"submitButtonText":{"type":"string","default":""},"inputButtonText":{"type":"string","default":""},"inputTextColor":{"type":"string","default":""},"selectTextColor":{"type":"string","default":""},"buttonTextColor":{"type":"string","default":""},"inputImageBefore":{"type":"number","default":null},"inputImageAfter":{"type":"number","default":null},"selectImageBefore":{"type":"number","default":null},"selectImageAfter":{"type":"number","default":null},"buttonImageBefore":{"type":"number","default":null},"buttonImageAfter":{"type":"number","default":null},"openImageBefore":{"type":"number","default":null},"openImageAfter":{"type":"number","default":null},"closeImageBefore":{"type":"number","default":null},"closeImageAfter":{"type":"number","default":null},"openButtonTextColor":{"type":"string","default":""},"openButtonBackgroundColor":{"type":"string","default":""},"closeButtonTextColor":{"type":"string","default":""},"closeButtonBackgroundColor":{"type":"string","default":""}},"textdomain":"gt-fse-widgets-ctv","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php","viewScript":"file:./view.js"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"gt/gt-fse-widgets-ctv","version":"1.0.9","title":"GT Widgets CTOUTVERT","category":"widgets","icon":"welcome-widgets-menus","description":"Un block pour afficher des widgets CTOUTVERT","example":{},"supports":{"html":false,"typography":{"fontSize":true,"fontFamily":true,"lineHeight":true,"fontWeight":true}},"attributes":{"isSearchBar":{"type":"boolean","default":false},"isList":{"type":"boolean","default":true},"isProduct":{"type":"boolean","default":false},"isMap":{"type":"boolean","default":false},"isTarifs":{"type":"boolean","default":false},"isSpecialOffers":{"type":"boolean","default":false},"isNoteMoyenne":{"type":"boolean","default":false},"isReviews":{"type":"boolean","default":false},"isSearch":{"type":"boolean","default":false},"isInventory":{"type":"boolean","default":false},"isCalendarProduct":{"type":"boolean","default":false},"isGtResaSticky":{"type":"boolean","default":false},"productId":{"type":"number","default":0},"dataAttributes":{"type":"string","default":""},"backgroundColor":{"type":"string","default":""},"buttonBackgroundColor":{"type":"string","default":""},"titleText":{"type":"string","default":""},"closeText":{"type":"string","default":""},"submitButtonText":{"type":"string","default":""},"inputButtonText":{"type":"string","default":""},"inputTextColor":{"type":"string","default":""},"selectTextColor":{"type":"string","default":""},"buttonTextColor":{"type":"string","default":""},"inputImageBefore":{"type":"number","default":null},"inputImageAfter":{"type":"number","default":null},"selectImageBefore":{"type":"number","default":null},"selectImageAfter":{"type":"number","default":null},"buttonImageBefore":{"type":"number","default":null},"buttonImageAfter":{"type":"number","default":null},"openImageBefore":{"type":"number","default":null},"openImageAfter":{"type":"number","default":null},"closeImageBefore":{"type":"number","default":null},"closeImageAfter":{"type":"number","default":null},"openButtonTextColor":{"type":"string","default":""},"openButtonBackgroundColor":{"type":"string","default":""},"closeButtonTextColor":{"type":"string","default":""},"closeButtonBackgroundColor":{"type":"string","default":""}},"textdomain":"gt-fse-widgets-ctv","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php","viewScript":"file:./view.js"}');
 
 /***/ })
 

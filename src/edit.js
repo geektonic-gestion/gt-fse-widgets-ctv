@@ -10,7 +10,6 @@ export default function Edit({ attributes, setAttributes }) {
         isMap,
         isTarifs,
         isList,
-        productId,
         isProduct,
         isSearchBar,
         isSpecialOffers,
@@ -207,9 +206,8 @@ export default function Edit({ attributes, setAttributes }) {
                     {(isTarifs || isProduct || isInventory || isReviews || isCalendarProduct) && (
                         <NumberControl
                             label={__('Product ID', 'gt-fse-widgets-ctv')}
-                            value={productId}
-                            onChange={(id) => setAttributes({ productId: id || 0 })}
-                            min={0}
+                            value={parseInt(attributes.productId)}
+                            onChange={(productId) => setAttributes({ productId: parseInt(productId) })}
                         />
                     )}
                     <TextareaControl
