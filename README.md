@@ -49,3 +49,7 @@ Vous pouvez ajouter des attributs data personnalisés à chaque widget en utilis
 ## Accès via l'API REST
 
 Les meta-données `_gt_ctv_global_id` et `_gt_ctv_id_group` sont accessibles et modifiables via l'API REST de WordPress. Cela permet une gestion avancée via des applications externes.
+
+## Query Block Hébergement 
+Si le plugin gt-fse-hebergements est ajouté, vous pourrez ajouter un productId à chaque hébergement dans une meta `gt_ctv_product_id`
+Vous aurez aussi l'option `Ouvrir les hébergements en sidebar` dans la sidebar du block `GT FSE Hébergements`

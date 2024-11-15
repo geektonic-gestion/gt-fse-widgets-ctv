@@ -25,13 +25,33 @@ function gt_fse_widgets_ctv_gt_fse_widgets_ctv_block_init() {
 add_action( 'init', 'gt_fse_widgets_ctv_gt_fse_widgets_ctv_block_init' );
 
 
-// Register the script and style
-// function gt_fse_widgets_ctv_register_scripts() {
-//     wp_register_script( 'gt-caleran-moment', plugin_dir_url( __FILE__ ) . 'lib/caleran/vendor/moment.min.js', array(), '1.4.20', true );
-//     wp_register_script( 'gt-caleran-script', plugin_dir_url( __FILE__ ) . 'lib/caleran/js/caleran.min.js', array('gt-caleran-moment'), '1.4.20', true );
-//     wp_register_style( 'gt-caleran-style', plugin_dir_url( __FILE__ ) . 'lib/caleran/css/caleran.min.css', array(), '1.4.20' );
-// }
-// add_action( 'wp_enqueue_scripts', 'gt_fse_widgets_ctv_register_scripts' );
+// Enqueue BO script
+
+add_action( 'enqueue_block_editor_assets', function() {
+    // Auto-generated asset file.
+    $asset = include_once __DIR__ . '/query-block/build/index.asset.php';
+
+    wp_enqueue_script(
+        'gt-fse-ctv-widget-query-block-back',
+        plugins_url( '', __FILE__ ) . '/query-block/build/index.js',
+        $asset['dependencies'],
+        $asset['version'],
+        true
+    );
+});
+
+add_action( 'wp_enqueue_scripts', function() {
+    // Auto-generated asset file.
+    $asset = include_once __DIR__ . '/query-block/build/index.asset.php';
+
+    wp_enqueue_script(
+        'gt-fse-ctv-widget-query-block-front',
+        plugins_url( '', __FILE__ ) . '/query-block/view.js',
+        $asset['dependencies'],
+        $asset['version'],
+        true
+    );
+});
 
 // Add the settings page
 function gt_ctv_add_settings_page() {
@@ -140,6 +160,21 @@ function gt_ctv_meta_box_callback( $post ) {
     $checked = checked( 1, $final_id_group, false );
     echo '<p><label for="gt_ctv_id_group">' . __( 'idGroup ?', 'gt-fse-widgets-ctv' ) . '</label></p>';
     echo '<input type="checkbox" id="gt_ctv_id_group" name="gt_ctv_id_group" value="1" ' . $checked . ' />';
+
+    echo "<br/>";
+    echo "<br/>";
+    
+    // Champ "Identifiant produit"
+    // Récupérer la valeur actuelle du champ "Identifiant produit"
+    $product_id = get_post_meta( $post->ID, '_gt_ctv_product_id', true );
+    echo '<p><label for="gt_ctv_product_id">' . __( 'Identifiant produit', 'gt-fse-widgets-ctv' ) . '</label></p>';
+    echo '<input 
+        type="text" 
+        id="gt_ctv_product_id" 
+        name="gt_ctv_product_id" 
+        value="' . esc_attr( $product_id ) . '" 
+        style="width: 100%; margin-top: 5px;" 
+    />';
 }
 
 // Save meta box data
@@ -164,6 +199,14 @@ function gt_ctv_save_meta_box_data( $post_id ) {
         update_post_meta( $post_id, '_gt_ctv_global_id', sanitize_text_field( $_POST['gt_ctv_global_id'] ) );
     } else {
         delete_post_meta( $post_id, '_gt_ctv_global_id' ); // Delete if not set
+    }
+
+    // Vérifier et sauvegarder la valeur du champ "Identifiant produit"
+    if ( isset( $_POST['gt_ctv_product_id'] ) ) {
+        $product_id = sanitize_text_field( $_POST['gt_ctv_product_id'] );
+        update_post_meta( $post_id, '_gt_ctv_product_id', $product_id );
+    } else {
+        delete_post_meta( $post_id, '_gt_ctv_product_id' );
     }
 
     // Save the idGroup value (checkbox)
@@ -265,3 +308,41 @@ function gt_ctv_add_script() {
 }
 add_action('wp_head', 'gt_ctv_add_script');
 add_action('admin_head', 'gt_ctv_add_script');
+
+// Ajouter une classe aux éléments .hebergement si gtOpenInSidebar est activé
+function gt_ctv_add_class_to_hebergements_with_sidebar($block_content, $block) {
+    // Vérifiez que c'est un Query Block et que gtOpenInSidebar est activé
+    if (
+        isset($block['blockName'], $block['attrs']['gtOpenInSidebar']) &&
+        $block['blockName'] === 'core/query' &&
+        $block['attrs']['gtOpenInSidebar'] === true
+    ) {
+        // Utilisez WP_HTML_Tag_Processor pour analyser le contenu HTML
+        $processor = new WP_HTML_Tag_Processor($block_content);
+
+        // Parcourez les balises avec la classe contenant "hebergement"
+        while ($processor->next_tag(['attributes' => ['class' => '*hebergement*']])) {
+            $processor->add_class('gt-fse-widgets-ctv-open-product');
+        }
+
+        // Retournez le contenu HTML mis à jour
+        return $processor->get_updated_html();
+    }
+
+    // Retournez le contenu non modifié pour les autres blocs
+    return $block_content;
+}
+add_filter('render_block', 'gt_ctv_add_class_to_hebergements_with_sidebar', 10, 2);
+
+
+// register attributes
+add_filter('register_block_type_args', function($args, $name) {
+    // Verify block name is exactly as intended
+    if ($name === 'core/query') { // Or use 'gt/gt-fse-hebergements' if applicable
+        $args['attributes']['gtOpenInSidebar'] = array(
+            'type' => 'integer',
+            'default' => null,
+        );
+    }
+    return $args;
+}, 10, 2);
