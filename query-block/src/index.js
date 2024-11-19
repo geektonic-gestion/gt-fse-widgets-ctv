@@ -13,8 +13,6 @@ const addCtoutvertPanel = createHigherOrderComponent((BlockEdit) => {
             return <BlockEdit {...props} />;
         }
 
-        console.log(attributes);
-
         return (
             <>
                 <BlockEdit {...props} />
