@@ -157,7 +157,6 @@ __webpack_require__.r(__webpack_exports__);
 
 const addCtoutvertPanel = (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_5__.createHigherOrderComponent)(BlockEdit => {
   return props => {
-    var _attributes$gtOpenInS;
     const {
       name,
       attributes,
@@ -170,6 +169,7 @@ const addCtoutvertPanel = (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_5__.cre
         ...props
       });
     }
+    console.log(attributes);
     return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(BlockEdit, {
       ...props
     }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.InspectorControls, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelBody, {
@@ -177,7 +177,7 @@ const addCtoutvertPanel = (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_5__.cre
       initialOpen: true
     }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.ToggleControl, {
       label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Ouvrir les hébergements en sidebar', 'gt-widgets-ctv'),
-      checked: (_attributes$gtOpenInS = attributes?.gtOpenInSidebar) !== null && _attributes$gtOpenInS !== void 0 ? _attributes$gtOpenInS : false,
+      checked: attributes.gtOpenInSidebar,
       onChange: value => setAttributes({
         gtOpenInSidebar: value
       })

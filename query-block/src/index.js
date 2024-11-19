@@ -13,6 +13,8 @@ const addCtoutvertPanel = createHigherOrderComponent((BlockEdit) => {
             return <BlockEdit {...props} />;
         }
 
+        console.log(attributes);
+
         return (
             <>
                 <BlockEdit {...props} />
@@ -20,7 +22,7 @@ const addCtoutvertPanel = createHigherOrderComponent((BlockEdit) => {
                     <PanelBody title={__('Widgets CTOUTVERT', 'gt-widgets-ctv')} initialOpen={true}>
                         <ToggleControl
                             label={__('Ouvrir les hébergements en sidebar', 'gt-widgets-ctv')}
-                            checked={attributes?.gtOpenInSidebar ?? false}
+                            checked={attributes.gtOpenInSidebar}
                             onChange={(value) => setAttributes({ gtOpenInSidebar: value })}
                         />
                     </PanelBody>

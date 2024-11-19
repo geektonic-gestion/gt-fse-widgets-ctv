@@ -4,7 +4,7 @@
  * Description:       Un block pour afficher des widgets CTOUTVERT
  * Requires at least: 6.1
  * Requires PHP:      7.0
- * Version:           1.1.1
+ * Version:           1.1.2
  * Author:            The WordPress Contributors
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -347,8 +347,8 @@ add_filter('register_block_type_args', function($args, $name) {
     // Verify block name is exactly as intended
     if ($name === 'core/query') { // Or use 'gt/gt-fse-hebergements' if applicable
         $args['attributes']['gtOpenInSidebar'] = array(
-            'type' => 'integer',
-            'default' => null,
+            'type' => 'boolean',
+            'default' => false,
         );
     }
     return $args;
