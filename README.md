@@ -34,13 +34,14 @@ Après avoir activé le plugin, vous pouvez configurer les options globales dans
 
 Dans l'éditeur de blocs, vous pouvez ajouter un bloc **GT Widgets CTOUTVERT**. Sélectionnez le widget que vous souhaitez afficher et personnalisez-le en utilisant les différentes options disponibles.
 
-### Barre de réservation sticky
-
-La barre de réservation sticky permet d'ajouter une interface de réservation à affichage permanent sur vos pages. Vous pouvez personnaliser :
+### Barre de réservation
+ 
+Vous pouvez personnaliser :
 
 - La couleur du texte et du fond des boutons d'ouverture et de fermeture.
 - Des images peuvent être placées avant et après les boutons pour personnaliser encore davantage l'apparence.
 - Les dates d'arrivée et de départ sont configurables et synchronisées automatiquement avec des cookies.
+- Sticky ou non (utilisez le sticky plutôt dans le footer par exemple)
 
 ### Data Attributes
 

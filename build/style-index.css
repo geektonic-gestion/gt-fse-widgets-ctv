@@ -6,7 +6,7 @@
   box-sizing: border-box;
   font-weight: inherit;
 }
-.gt-widgets-ctv-resa:not(.admin) {
+.gt-widgets-ctv-resa.sticky:not(.admin) {
   position: fixed;
   top: 100%;
   left: 0;

@@ -18,6 +18,7 @@ export default function Edit({ attributes, setAttributes }) {
         isSearch,
         isInventory,
         isCalendarProduct,
+        isGtResa,
         isGtResaSticky,
         backgroundColor,
         buttonBackgroundColor,
@@ -56,6 +57,7 @@ export default function Edit({ attributes, setAttributes }) {
         { label: __('Recherche', 'gt-fse-widgets-ctv'), value: 'isSearch' },
         { label: __('Inventaire', 'gt-fse-widgets-ctv'), value: 'isInventory' },
         { label: __('Calendrier produit', 'gt-fse-widgets-ctv'), value: 'isCalendarProduct' },
+        { label: __('Barre resa', 'gt-fse-widgets-ctv'), value: 'isGtResa' },
         { label: __('Barre resa sticky', 'gt-fse-widgets-ctv'), value: 'isGtResaSticky' },
     ];
 
@@ -222,7 +224,7 @@ export default function Edit({ attributes, setAttributes }) {
                         </a>
                     </p>
                 </PanelBody>
-                {isGtResaSticky && (
+                {(isGtResaSticky || isGtResa) && (
                     <>
                     <PanelBody title={__('Global', 'gt-fse-widgets-ctv')} >
                         {renderColorPalette(
@@ -279,6 +281,12 @@ export default function Edit({ attributes, setAttributes }) {
                         )}
                         {renderImageControl(__('Image Before Select', 'gt-fse-widgets-ctv'), selectImageBefore, (newId) => setAttributes({ selectImageBefore: newId }), 'selectImageBeforeUrl')}
                         {renderImageControl(__('Image After Select', 'gt-fse-widgets-ctv'), selectImageAfter, (newId) => setAttributes({ selectImageAfter: newId }), 'selectImageAfterUrl')}
+                        <NumberControl 
+                            label={__('Nombre de personnes max', 'gt-fse-widgets-ctv')}
+                            value={parseInt(attributes.maxPersons)}
+                            onChange={(maxPersons) => setAttributes({ maxPersons: parseInt(maxPersons) })}
+                            min={1}
+                        />
                     </PanelBody>
 
                     <PanelBody title={__('Bouton recherche', 'gt-fse-widgets-ctv')} initialOpen={false} >
@@ -299,7 +307,7 @@ export default function Edit({ attributes, setAttributes }) {
                 )}
             </InspectorControls>
 
-            {isGtResaSticky ? (
+            {(isGtResaSticky || isGtResa) ? (
                 <div className="gt-widgets-ctv-resa admin">
                     <div className="gt-widgets-ctv-resa__hide" style={{ color: closeButtonTextColor, backgroundColor: closeButtonBackgroundColor }}>
                         {imageUrls.closeImageBeforeUrl && renderMaskedImage(imageUrls.closeImageBeforeUrl)}

@@ -38,39 +38,40 @@
 	<?php elseif($attributes['productId']): ?>
 		<ctv-product data-product-id="<?php echo $attributes['productId']; ?>" <?php echo $attributes['dataAttributes']; ?>></ctv-product>
 
-	<?php elseif ( $attributes['isGtResaSticky'] ): ?>
-		<div class="gt-widgets-ctv-resa">
-			<div class="gt-widgets-ctv-resa__toggle" style="color: <?php echo esc_attr( $attributes['openButtonTextColor'] ); ?>; background-color: <?php echo esc_attr( $attributes['openButtonBackgroundColor'] ); ?>;">
-				
-				<?php if ( !empty( $attributes['openImageBefore'] ) ): ?>
-					<div class="masked-image" style="mask-image: url('<?php echo esc_url( wp_get_attachment_url( $attributes['openImageBefore'] ) ); ?>'); -webkit-mask-image: url('<?php echo esc_url( wp_get_attachment_url( $attributes['openImageBefore'] ) ); ?>');"></div>
-				<?php endif; ?>
-				
-				<div class="gt-widgets-ctv-resa__toggle__title">
-					<?php echo esc_html( $attributes['titleText'] ?: __( 'Organisez vos vacances', 'gt' ) ); ?>
-				</div>
-				
-				<?php if ( !empty( $attributes['openImageAfter'] ) ): ?>
-					<div class="masked-image" style="mask-image: url('<?php echo esc_url( wp_get_attachment_url( $attributes['openImageAfter'] ) ); ?>'); -webkit-mask-image: url('<?php echo esc_url( wp_get_attachment_url( $attributes['openImageAfter'] ) ); ?>');"></div>
-				<?php endif; ?>
-			</div>
-
-			<div class="gt-widgets-ctv-resa__hide" style="color: <?php echo esc_attr( $attributes['closeButtonTextColor'] ); ?>; background-color: <?php echo esc_attr( $attributes['closeButtonBackgroundColor'] ); ?>;">
-				
-				<?php if ( !empty( $attributes['closeImageBefore'] ) ): ?>
-					<div class="masked-image" style="mask-image: url('<?php echo esc_url( wp_get_attachment_url( $attributes['closeImageBefore'] ) ); ?>'); -webkit-mask-image: url('<?php echo esc_url( wp_get_attachment_url( $attributes['closeImageBefore'] ) ); ?>');"></div>
-				<?php endif; ?>
-				
-				<div class="gt-widgets-ctv-resa__toggle__title">
-					<?php echo esc_html( $attributes['closeText'] ?: __( 'Fermer', 'gt' ) ); ?>
+	<?php elseif ( $attributes['isGtResaSticky'] || $attributes['isGtResa'] ): ?>
+		<div class="gt-widgets-ctv-resa <?php if($attributes['isGtResaSticky']) echo "sticky"; ?>">
+			<?php if($attributes['isGtResaSticky']): ?>
+				<div class="gt-widgets-ctv-resa__toggle" style="color: <?php echo esc_attr( $attributes['openButtonTextColor'] ); ?>; background-color: <?php echo esc_attr( $attributes['openButtonBackgroundColor'] ); ?>;">
+					
+					<?php if ( !empty( $attributes['openImageBefore'] ) ): ?>
+						<div class="masked-image" style="mask-image: url('<?php echo esc_url( wp_get_attachment_url( $attributes['openImageBefore'] ) ); ?>'); -webkit-mask-image: url('<?php echo esc_url( wp_get_attachment_url( $attributes['openImageBefore'] ) ); ?>');"></div>
+					<?php endif; ?>
+					
+					<div class="gt-widgets-ctv-resa__toggle__title">
+						<?php echo esc_html( $attributes['titleText'] ?: __( 'Organisez vos vacances', 'gt' ) ); ?>
+					</div>
+					
+					<?php if ( !empty( $attributes['openImageAfter'] ) ): ?>
+						<div class="masked-image" style="mask-image: url('<?php echo esc_url( wp_get_attachment_url( $attributes['openImageAfter'] ) ); ?>'); -webkit-mask-image: url('<?php echo esc_url( wp_get_attachment_url( $attributes['openImageAfter'] ) ); ?>');"></div>
+					<?php endif; ?>
 				</div>
 
-				<?php if ( !empty( $attributes['closeImageAfter'] ) ): ?>
-					<div class="masked-image" style="mask-image: url('<?php echo esc_url( wp_get_attachment_url( $attributes['closeImageAfter'] ) ); ?>'); -webkit-mask-image: url('<?php echo esc_url( wp_get_attachment_url( $attributes['closeImageAfter'] ) ); ?>');"></div>
-				<?php endif; ?>
+				<div class="gt-widgets-ctv-resa__hide" style="color: <?php echo esc_attr( $attributes['closeButtonTextColor'] ); ?>; background-color: <?php echo esc_attr( $attributes['closeButtonBackgroundColor'] ); ?>;">
+					
+					<?php if ( !empty( $attributes['closeImageBefore'] ) ): ?>
+						<div class="masked-image" style="mask-image: url('<?php echo esc_url( wp_get_attachment_url( $attributes['closeImageBefore'] ) ); ?>'); -webkit-mask-image: url('<?php echo esc_url( wp_get_attachment_url( $attributes['closeImageBefore'] ) ); ?>');"></div>
+					<?php endif; ?>
+					
+					<div class="gt-widgets-ctv-resa__toggle__title">
+						<?php echo esc_html( $attributes['closeText'] ?: __( 'Fermer', 'gt' ) ); ?>
+					</div>
 
-			</div>
+					<?php if ( !empty( $attributes['closeImageAfter'] ) ): ?>
+						<div class="masked-image" style="mask-image: url('<?php echo esc_url( wp_get_attachment_url( $attributes['closeImageAfter'] ) ); ?>'); -webkit-mask-image: url('<?php echo esc_url( wp_get_attachment_url( $attributes['closeImageAfter'] ) ); ?>');"></div>
+					<?php endif; ?>
 
+				</div>
+			<?php endif; ?>
 			<form class="gt-widgets-ctv-resa__form" style="background-color: <?php echo esc_attr( $attributes['backgroundColor'] ); ?>;">
 				
 				<div class="gt-widgets-ctv-resa__form__entry gt-widgets-ctv-resa__form__entry--ranges" style="color: <?php echo esc_attr( $attributes['inputTextColor'] ); ?>;">
@@ -93,16 +94,10 @@
 					<?php endif; ?>
 					
 					<select>
-						<option value=""><?php esc_html_e( '1 personne', 'gt' ); ?></option>
-						<option value="2" selected><?php esc_html_e( '2 personnes', 'gt' ); ?></option>
-						<option value="3"><?php esc_html_e( '3 personnes', 'gt' ); ?></option>
-						<option value="4"><?php esc_html_e( '4 personnes', 'gt' ); ?></option>
-						<option value="5"><?php esc_html_e( '5 personnes', 'gt' ); ?></option>
-						<option value="6"><?php esc_html_e( '6 personnes', 'gt' ); ?></option>
-						<option value="7"><?php esc_html_e( '7 personnes', 'gt' ); ?></option>
-						<option value="8"><?php esc_html_e( '8 personnes', 'gt' ); ?></option>
-						<option value="9"><?php esc_html_e( '9 personnes', 'gt' ); ?></option>
-						<option value="10"><?php esc_html_e( '10 personnes', 'gt' ); ?></option>
+						<option value="1"><?php esc_html_e( '1 personne', 'gt' ); ?></option>
+						<?php for($i = 2; $i <= $attributes['maxPersons']; $i++): ?>
+							<option value="<?php echo $i; ?>" <?php if($i == 2) echo "selected"; ?>><?php echo $i; ?> <?php esc_html_e( 'personnes', 'gt' ); ?></option>
+						<?php endfor; ?>
 					</select>
 
 					<?php if ( !empty( $attributes['selectImageAfter'] ) ): ?>

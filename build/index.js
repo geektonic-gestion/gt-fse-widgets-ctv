@@ -48,6 +48,7 @@ function Edit({
     isSearch,
     isInventory,
     isCalendarProduct,
+    isGtResa,
     isGtResaSticky,
     backgroundColor,
     buttonBackgroundColor,
@@ -106,6 +107,9 @@ function Edit({
   }, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Calendrier produit', 'gt-fse-widgets-ctv'),
     value: 'isCalendarProduct'
+  }, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Barre resa', 'gt-fse-widgets-ctv'),
+    value: 'isGtResa'
   }, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Barre resa sticky', 'gt-fse-widgets-ctv'),
     value: 'isGtResaSticky'
@@ -252,7 +256,7 @@ function Edit({
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
     href: `https://reservation.secureholiday.net/fr/${globalId}/documentation/widgets/`,
     target: "_blank"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Lire la documentation', 'gt-fse-widgets-ctv')))), isGtResaSticky && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Lire la documentation', 'gt-fse-widgets-ctv')))), (isGtResaSticky || isGtResa) && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Global', 'gt-fse-widgets-ctv')
   }, renderColorPalette((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Couleur du fond', 'gt-fse-widgets-ctv'), backgroundColor, newColor => handleColorChange(newColor, 'backgroundColor'))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Bouton ouverture', 'gt-fse-widgets-ctv'),
@@ -282,14 +286,21 @@ function Edit({
     selectImageBefore: newId
   }), 'selectImageBeforeUrl'), renderImageControl((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Image After Select', 'gt-fse-widgets-ctv'), selectImageAfter, newId => setAttributes({
     selectImageAfter: newId
-  }), 'selectImageAfterUrl')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
+  }), 'selectImageAfterUrl'), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.__experimentalNumberControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Nombre de personnes max', 'gt-fse-widgets-ctv'),
+    value: parseInt(attributes.maxPersons),
+    onChange: maxPersons => setAttributes({
+      maxPersons: parseInt(maxPersons)
+    }),
+    min: 1
+  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Bouton recherche', 'gt-fse-widgets-ctv'),
     initialOpen: false
   }, renderColorPalette((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Couleur du texte', 'gt-fse-widgets-ctv'), buttonTextColor, newColor => handleColorChange(newColor, 'buttonTextColor')), renderColorPalette((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Couleur du fond', 'gt-fse-widgets-ctv'), buttonBackgroundColor, newColor => handleColorChange(newColor, 'buttonBackgroundColor')), renderImageControl((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Image Before Button', 'gt-fse-widgets-ctv'), buttonImageBefore, newId => setAttributes({
     buttonImageBefore: newId
   }), 'buttonImageBeforeUrl'), renderImageControl((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Image After Button', 'gt-fse-widgets-ctv'), buttonImageAfter, newId => setAttributes({
     buttonImageAfter: newId
-  }), 'buttonImageAfterUrl')))), isGtResaSticky ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }), 'buttonImageAfterUrl')))), isGtResaSticky || isGtResa ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "gt-widgets-ctv-resa admin"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "gt-widgets-ctv-resa__hide",
@@ -534,7 +545,7 @@ module.exports = window["wp"]["i18n"];
   \************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"gt/gt-fse-widgets-ctv","version":"1.0.9","title":"GT Widgets CTOUTVERT","category":"widgets","icon":"welcome-widgets-menus","description":"Un block pour afficher des widgets CTOUTVERT","example":{},"supports":{"html":false,"typography":{"fontSize":true,"fontFamily":true,"lineHeight":true,"fontWeight":true}},"attributes":{"isSearchBar":{"type":"boolean","default":false},"isList":{"type":"boolean","default":true},"isProduct":{"type":"boolean","default":false},"isMap":{"type":"boolean","default":false},"isTarifs":{"type":"boolean","default":false},"isSpecialOffers":{"type":"boolean","default":false},"isNoteMoyenne":{"type":"boolean","default":false},"isReviews":{"type":"boolean","default":false},"isSearch":{"type":"boolean","default":false},"isInventory":{"type":"boolean","default":false},"isCalendarProduct":{"type":"boolean","default":false},"isGtResaSticky":{"type":"boolean","default":false},"productId":{"type":"number","default":0},"dataAttributes":{"type":"string","default":""},"backgroundColor":{"type":"string","default":""},"buttonBackgroundColor":{"type":"string","default":""},"titleText":{"type":"string","default":""},"closeText":{"type":"string","default":""},"submitButtonText":{"type":"string","default":""},"inputButtonText":{"type":"string","default":""},"inputTextColor":{"type":"string","default":""},"selectTextColor":{"type":"string","default":""},"buttonTextColor":{"type":"string","default":""},"inputImageBefore":{"type":"number","default":null},"inputImageAfter":{"type":"number","default":null},"selectImageBefore":{"type":"number","default":null},"selectImageAfter":{"type":"number","default":null},"buttonImageBefore":{"type":"number","default":null},"buttonImageAfter":{"type":"number","default":null},"openImageBefore":{"type":"number","default":null},"openImageAfter":{"type":"number","default":null},"closeImageBefore":{"type":"number","default":null},"closeImageAfter":{"type":"number","default":null},"openButtonTextColor":{"type":"string","default":""},"openButtonBackgroundColor":{"type":"string","default":""},"closeButtonTextColor":{"type":"string","default":""},"closeButtonBackgroundColor":{"type":"string","default":""}},"textdomain":"gt-fse-widgets-ctv","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php","viewScript":"file:./view.js"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"gt/gt-fse-widgets-ctv","version":"1.1.0","title":"GT Widgets CTOUTVERT","category":"widgets","icon":"welcome-widgets-menus","description":"Un block pour afficher des widgets CTOUTVERT","example":{},"supports":{"html":false,"typography":{"fontSize":true,"fontFamily":true,"lineHeight":true,"fontWeight":true}},"attributes":{"isSearchBar":{"type":"boolean","default":false},"isList":{"type":"boolean","default":true},"isProduct":{"type":"boolean","default":false},"isMap":{"type":"boolean","default":false},"isTarifs":{"type":"boolean","default":false},"isSpecialOffers":{"type":"boolean","default":false},"isNoteMoyenne":{"type":"boolean","default":false},"isReviews":{"type":"boolean","default":false},"isSearch":{"type":"boolean","default":false},"isInventory":{"type":"boolean","default":false},"isCalendarProduct":{"type":"boolean","default":false},"isGtResa":{"type":"boolean","default":false},"isGtResaSticky":{"type":"boolean","default":false},"maxPersons":{"type":"number","default":8},"productId":{"type":"number","default":0},"dataAttributes":{"type":"string","default":""},"backgroundColor":{"type":"string","default":""},"buttonBackgroundColor":{"type":"string","default":""},"titleText":{"type":"string","default":""},"closeText":{"type":"string","default":""},"submitButtonText":{"type":"string","default":""},"inputButtonText":{"type":"string","default":""},"inputTextColor":{"type":"string","default":""},"selectTextColor":{"type":"string","default":""},"buttonTextColor":{"type":"string","default":""},"inputImageBefore":{"type":"number","default":null},"inputImageAfter":{"type":"number","default":null},"selectImageBefore":{"type":"number","default":null},"selectImageAfter":{"type":"number","default":null},"buttonImageBefore":{"type":"number","default":null},"buttonImageAfter":{"type":"number","default":null},"openImageBefore":{"type":"number","default":null},"openImageAfter":{"type":"number","default":null},"closeImageBefore":{"type":"number","default":null},"closeImageAfter":{"type":"number","default":null},"openButtonTextColor":{"type":"string","default":""},"openButtonBackgroundColor":{"type":"string","default":""},"closeButtonTextColor":{"type":"string","default":""},"closeButtonBackgroundColor":{"type":"string","default":""}},"textdomain":"gt-fse-widgets-ctv","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php","viewScript":"file:./view.js"}');
 
 /***/ })
 
