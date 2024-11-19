@@ -26,16 +26,16 @@ import { __ } from '@wordpress/i18n';
     }
 
     // Load js-cookie script
-    loadScript('/wp-content/plugins/gt-fse-widgets-ctv/lib/jscookies/js.cookies.min.js');
+    loadScript(gtFseCtvVars.pluginUrl + '/lib/jscookies/js.cookies.min.js');
 
     // Load Moment.js first
-    loadScript('/wp-content/plugins/gt-fse-widgets-ctv/lib/caleran/vendor/moment.min.js', function () {
+    loadScript(gtFseCtvVars.pluginUrl + '/lib/caleran/vendor/moment.min.js', function () {
         // After Moment.js is loaded, load Caleran script
-        loadScript('/wp-content/plugins/gt-fse-widgets-ctv/lib/caleran/js/caleran.min.js');
+        loadScript(gtFseCtvVars.pluginUrl + '/lib/caleran/js/caleran.min.js');
     });
 
     // Load Caleran CSS
-    loadStyle('/wp-content/plugins/gt-fse-widgets-ctv/lib/caleran/css/caleran.min.css');
+    loadStyle(gtFseCtvVars.pluginUrl + '/lib/caleran/css/caleran.min.css');
     
 
     $(window).scroll(function() {

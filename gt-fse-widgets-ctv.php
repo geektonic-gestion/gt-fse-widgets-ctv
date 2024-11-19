@@ -4,7 +4,7 @@
  * Description:       Un block pour afficher des widgets CTOUTVERT
  * Requires at least: 6.1
  * Requires PHP:      7.0
- * Version:           1.1.0
+ * Version:           1.1.1
  * Author:            The WordPress Contributors
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -28,6 +28,7 @@ add_action( 'init', 'gt_fse_widgets_ctv_gt_fse_widgets_ctv_block_init' );
 // Enqueue BO script
 
 add_action( 'enqueue_block_editor_assets', function() {
+
     // Auto-generated asset file.
     $asset = include_once __DIR__ . '/query-block/build/index.asset.php';
 
@@ -40,7 +41,8 @@ add_action( 'enqueue_block_editor_assets', function() {
     );
 });
 
-add_action( 'wp_enqueue_scripts', function() {
+add_action( 'wp_enqueue_scripts', function() {  
+
     // Auto-generated asset file.
     $asset = include_once __DIR__ . '/query-block/build/index.asset.php';
 
@@ -51,6 +53,11 @@ add_action( 'wp_enqueue_scripts', function() {
         $asset['version'],
         true
     );
+
+    wp_localize_script('gt-fse-ctv-widget-query-block-front', 'gtFseCtvVars', array(
+        'pluginUrl' => plugins_url('', __FILE__),
+    ));
+
 });
 
 // Add the settings page
