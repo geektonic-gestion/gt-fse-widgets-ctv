@@ -20,15 +20,10 @@ export default function Edit({ attributes, setAttributes }) {
         isCalendarProduct,
         isGtResa,
         isGtResaSticky,
-        backgroundColor,
-        buttonBackgroundColor,
         dataAttributes,
         titleText,
         closeText,
         submitButtonText,
-        inputTextColor,
-        selectTextColor,
-        buttonTextColor,
         inputImageBefore,
         inputImageAfter,
         selectImageBefore,
@@ -39,10 +34,7 @@ export default function Edit({ attributes, setAttributes }) {
         openImageAfter,
         closeImageBefore,
         closeImageAfter,
-        openButtonTextColor,
-        openButtonBackgroundColor,
-        closeButtonTextColor,
-        closeButtonBackgroundColor
+        colorObject,
     } = attributes;
 
     const options = [
@@ -70,8 +62,6 @@ export default function Edit({ attributes, setAttributes }) {
         }, {});
         setAttributes(newAttributes);
     };
-    
-    
 
     const [colors, setColors] = useState([]);
     const [globalId, setGlobalId] = useState('');
@@ -126,20 +116,24 @@ export default function Edit({ attributes, setAttributes }) {
             .catch((error) => console.error('Error fetching global ID:', error));
     }, []);
 
-    const handleColorChange = (newColor, attribute) => {
-        setAttributes({ [attribute]: newColor });
+    const handleColorChange = (field, newColor) => {
+        setAttributes({
+            colorObject: {
+                ...attributes.colorObject, // Conservez les anciennes couleurs
+                [field]: newColor,         // Mettez à jour uniquement la couleur spécifique
+            },
+        });
     };
 
-    const renderColorPalette = (label, colorValue, onChangeCallback) => (
-        <>
+    const renderColorPalette = (label, field) => (
+        <div>
             <p>{label}</p>
             <ColorPalette
-                colors={colors}
-                value={colorValue}
-                onChange={onChangeCallback}
+                colors={colors} // Les couleurs récupérées des global settings
+                value={colorObject[field]}
+                onChange={(newColor) => handleColorChange(field, newColor)}
             />
-            <br />
-        </>
+        </div>
     );
 
     const renderImageControl = (label, imageId, onChangeCallback, imageUrlKey) => (
@@ -167,7 +161,7 @@ export default function Edit({ attributes, setAttributes }) {
                         onClick={() => {
                             onChangeCallback(null); // Set the image attribute to 0 or undefined to clear it
                             setImageUrls((prev) => ({ ...prev, [imageUrlKey]: null })); // Clear the image URL in the state
-                        }}                       
+                        }}
                         style={{ marginTop: '10px' }}
                     >
                         {__('Delete Image', 'gt-fse-widgets-ctv')}
@@ -178,7 +172,7 @@ export default function Edit({ attributes, setAttributes }) {
     );
 
     // Function to render masked images
-    const renderMaskedImage = (imageUrl) => {
+    const renderMaskedImage = (imageUrl, color) => {
         return (
             imageUrl && (
                 <div
@@ -186,7 +180,7 @@ export default function Edit({ attributes, setAttributes }) {
                     style={{
                         maskImage: `url(${imageUrl})`,
                         WebkitMaskImage: `url(${imageUrl})`,
-                        backgroundColor: 'currentColor',
+                        backgroundColor: color || 'currentColor',
                         width: '24px', // Set an appropriate width/height for your images
                         height: '24px'
                     }}
@@ -226,91 +220,160 @@ export default function Edit({ attributes, setAttributes }) {
                 </PanelBody>
                 {(isGtResaSticky || isGtResa) && (
                     <>
-                    <PanelBody title={__('Global', 'gt-fse-widgets-ctv')} >
-                        {renderColorPalette(
-                            __('Couleur du fond', 'gt-fse-widgets-ctv'),
-                            backgroundColor,
-                            (newColor) => handleColorChange(newColor, 'backgroundColor')
-                        )}
-                    </PanelBody>
-                    <PanelBody title={__('Bouton ouverture', 'gt-fse-widgets-ctv')} initialOpen={false} >
-                        {renderColorPalette(
-                            __('Couleur du texte', 'gt-fse-widgets-ctv'),
-                            openButtonTextColor,
-                            (newColor) => handleColorChange(newColor, 'openButtonTextColor')
-                        )}
-                        {renderColorPalette(
-                            __('Couleur du fond', 'gt-fse-widgets-ctv'),
-                            openButtonBackgroundColor,
-                            (newColor) => handleColorChange(newColor, 'openButtonBackgroundColor')
-                        )}
-                        {renderImageControl(__('Image avant', 'gt-fse-widgets-ctv'), openImageBefore, (newId) => setAttributes({ openImageBefore: newId }), 'openImageBeforeUrl')}
-                        {renderImageControl(__('Image après', 'gt-fse-widgets-ctv'), openImageAfter, (newId) => setAttributes({ openImageAfter: newId }), 'openImageAfterUrl')}
-                    </PanelBody>
+                        <PanelBody title={__('Global', 'gt-fse-widgets-ctv')} >
+                            {renderColorPalette(__('Couleur du fond', 'gt-fse-widgets-ctv'), 'background')}
+                        </PanelBody>
+                        <PanelBody title={__('Bouton ouverture', 'gt-fse-widgets-ctv')} initialOpen={false} >
+                            {renderColorPalette(__('Couleur du texte', 'gt-fse-widgets-ctv'), 'openButtonText')}
+                            {renderColorPalette(__('Couleur du fond', 'gt-fse-widgets-ctv'), 'openButtonBackground')}
+                            {renderImageControl(__('Image avant', 'gt-fse-widgets-ctv'), openImageBefore, (newId) => setAttributes({ openImageBefore: newId }), 'openImageBeforeUrl')}
+                            {renderImageControl(__('Image après', 'gt-fse-widgets-ctv'), openImageAfter, (newId) => setAttributes({ openImageAfter: newId }), 'openImageAfterUrl')}
+                        </PanelBody>
 
-                    <PanelBody title={__('Bouton fermeture', 'gt-fse-widgets-ctv')} initialOpen={false} >
-                        {renderColorPalette(
-                            __('Couleur du texte', 'gt-fse-widgets-ctv'),
-                            closeButtonTextColor,
-                            (newColor) => handleColorChange(newColor, 'closeButtonTextColor')
-                        )}
-                        {renderColorPalette(
-                            __('Couleur du fond', 'gt-fse-widgets-ctv'),
-                            closeButtonBackgroundColor,
-                            (newColor) => handleColorChange(newColor, 'closeButtonBackgroundColor')
-                        )}
-                        {renderImageControl(__('Image avant', 'gt-fse-widgets-ctv'), closeImageBefore, (newId) => setAttributes({ closeImageBefore: newId }), 'closeImageBeforeUrl')}
-                        {renderImageControl(__('Image après', 'gt-fse-widgets-ctv'), closeImageAfter, (newId) => setAttributes({ closeImageAfter: newId }), 'closeImageAfterUrl')}
-                    </PanelBody>
+                        <PanelBody title={__('Bouton fermeture', 'gt-fse-widgets-ctv')} initialOpen={false} >
+                            {renderColorPalette(__('Couleur du texte', 'gt-fse-widgets-ctv'), 'closeButtonText')}
+                            {renderColorPalette(__('Couleur du fond', 'gt-fse-widgets-ctv'), 'closeButtonBackground')}
+                            {renderImageControl(__('Image avant', 'gt-fse-widgets-ctv'), closeImageBefore, (newId) => setAttributes({ closeImageBefore: newId }), 'closeImageBeforeUrl')}
+                            {renderImageControl(__('Image après', 'gt-fse-widgets-ctv'), closeImageAfter, (newId) => setAttributes({ closeImageAfter: newId }), 'closeImageAfterUrl')}
+                        </PanelBody>
+                        <PanelBody title={__('Input Dates', 'gt-fse-widgets-ctv')} initialOpen={false}>
+                            <Button
+                                variant={attributes.visibleFields.inputDates ? 'primary' : 'secondary'}
+                                onClick={() =>
+                                    setAttributes({
+                                        visibleFields: {
+                                            ...attributes.visibleFields,
+                                            inputDates: !attributes.visibleFields.inputDates,
+                                        },
+                                    })
+                                }
+                            >
+                                {attributes.visibleFields.inputDates ? __('Masquer', 'gt-fse-widgets-ctv') : __('Afficher', 'gt-fse-widgets-ctv')}
+                            </Button>
 
-                    <PanelBody title={__('Input Dates', 'gt-fse-widgets-ctv')} initialOpen={false} >
-                        {renderColorPalette(
-                            __('Couleur du texte', 'gt-fse-widgets-ctv'),
-                            inputTextColor,
-                            (newColor) => handleColorChange(newColor, 'inputTextColor')
-                        )}
-                        {renderImageControl(__('Image avant', 'gt-fse-widgets-ctv'), inputImageBefore, (newId) => setAttributes({ inputImageBefore: newId }), 'inputImageBeforeUrl')}
-                        {renderImageControl(__('Image après', 'gt-fse-widgets-ctv'), inputImageAfter, (newId) => setAttributes({ inputImageAfter: newId }), 'inputImageAfterUrl')}
-                    </PanelBody>
+                            {renderColorPalette(
+                                __('Couleur du texte', 'gt-fse-widgets-ctv'),
+                                'inputDatesText'
+                            )}
+                            {renderColorPalette(
+                                __('Couleur de l\'image', 'gt-fse-widgets-ctv'),
+                                'inputDatesImage'
+                            )}
+                            {renderImageControl(
+                                __('Image avant', 'gt-fse-widgets-ctv'),
+                                inputImageBefore,
+                                (newId) => setAttributes({ inputImageBefore: newId }),
+                                'inputImageBeforeUrl'
+                            )}
+                            {renderImageControl(
+                                __('Image après', 'gt-fse-widgets-ctv'),
+                                inputImageAfter,
+                                (newId) => setAttributes({ inputImageAfter: newId }),
+                                'inputImageAfterUrl'
+                            )}
+                        </PanelBody>
 
-                    <PanelBody title={__('Nombre de personnes', 'gt-fse-widgets-ctv')} initialOpen={false} >
-                        {renderColorPalette(
-                            __('Couleur du texte', 'gt-fse-widgets-ctv'),
-                            selectTextColor,
-                            (newColor) => handleColorChange(newColor, 'selectTextColor')
-                        )}
-                        {renderImageControl(__('Image Before Select', 'gt-fse-widgets-ctv'), selectImageBefore, (newId) => setAttributes({ selectImageBefore: newId }), 'selectImageBeforeUrl')}
-                        {renderImageControl(__('Image After Select', 'gt-fse-widgets-ctv'), selectImageAfter, (newId) => setAttributes({ selectImageAfter: newId }), 'selectImageAfterUrl')}
-                        <NumberControl 
-                            label={__('Nombre de personnes max', 'gt-fse-widgets-ctv')}
-                            value={parseInt(attributes.maxPersons)}
-                            onChange={(maxPersons) => setAttributes({ maxPersons: parseInt(maxPersons) })}
-                            min={1}
-                        />
-                    </PanelBody>
+                        <PanelBody title={__('Nombre de personnes', 'gt-fse-widgets-ctv')} initialOpen={false}>
+                            <Button
+                                variant={attributes.visibleFields.persons ? 'primary' : 'secondary'}
+                                onClick={() =>
+                                    setAttributes({
+                                        visibleFields: {
+                                            ...attributes.visibleFields,
+                                            persons: !attributes.visibleFields.persons,
+                                        },
+                                    })
+                                }
+                            >
+                                {attributes.visibleFields.persons ? __('Masquer', 'gt-fse-widgets-ctv') : __('Afficher', 'gt-fse-widgets-ctv')}
+                            </Button>
 
-                    <PanelBody title={__('Bouton recherche', 'gt-fse-widgets-ctv')} initialOpen={false} >
-                        {renderColorPalette(
-                            __('Couleur du texte', 'gt-fse-widgets-ctv'),
-                            buttonTextColor,
-                            (newColor) => handleColorChange(newColor, 'buttonTextColor')
-                        )}
-                        {renderColorPalette(
-                            __('Couleur du fond', 'gt-fse-widgets-ctv'),
-                            buttonBackgroundColor,
-                            (newColor) => handleColorChange(newColor, 'buttonBackgroundColor')
-                        )}
-                        {renderImageControl(__('Image Before Button', 'gt-fse-widgets-ctv'), buttonImageBefore, (newId) => setAttributes({ buttonImageBefore: newId }), 'buttonImageBeforeUrl')}
-                        {renderImageControl(__('Image After Button', 'gt-fse-widgets-ctv'), buttonImageAfter, (newId) => setAttributes({ buttonImageAfter: newId }), 'buttonImageAfterUrl')}
-                    </PanelBody>
+                            {renderColorPalette(
+                                __('Couleur du texte', 'gt-fse-widgets-ctv'),
+                                'personsText'
+                            )}
+                            {renderColorPalette(
+                                __('Couleur de l\'image', 'gt-fse-widgets-ctv'),
+                                'personsImage'
+                            )}
+                            {renderImageControl(
+                                __('Image avant', 'gt-fse-widgets-ctv'),
+                                selectImageBefore,
+                                (newId) => setAttributes({ selectImageBefore: newId }),
+                                'selectImageBeforeUrl'
+                            )}
+                            {renderImageControl(
+                                __('Image après', 'gt-fse-widgets-ctv'),
+                                selectImageAfter,
+                                (newId) => setAttributes({ selectImageAfter: newId }),
+                                'selectImageAfterUrl'
+                            )}
+                            <NumberControl
+                                label={__('Nombre de personnes max', 'gt-fse-widgets-ctv')}
+                                value={parseInt(attributes.maxPersons)}
+                                onChange={(maxPersons) => setAttributes({ maxPersons: parseInt(maxPersons) })}
+                                min={1}
+                            />
+                        </PanelBody>
+
+                        <PanelBody title={__('Types d\'hébergements', 'gt-fse-widgets-ctv')} initialOpen={false}>
+                            <Button
+                                variant={attributes.visibleFields.type ? 'primary' : 'secondary'}
+                                onClick={() =>
+                                    setAttributes({
+                                        visibleFields: {
+                                            ...attributes.visibleFields,
+                                            type: !attributes.visibleFields.type,
+                                        },
+                                    })
+                                }
+                            >
+                                {attributes.visibleFields.type ? __('Masquer', 'gt-fse-widgets-ctv') : __('Afficher', 'gt-fse-widgets-ctv')}
+                            </Button>
+
+                            {renderColorPalette(
+                                __('Couleur du texte', 'gt-fse-widgets-ctv'),
+                                'typeText'
+                            )}
+                            {renderColorPalette(
+                                __('Couleur de l\'image', 'gt-fse-widgets-ctv'),
+                                'typeImage'
+                            )}
+                            {renderImageControl(
+                                __('Image avant', 'gt-fse-widgets-ctv'),
+                                selectImageBefore,
+                                (newId) => setAttributes({ selectImageBefore: newId }),
+                                'selectImageBeforeUrl'
+                            )}
+                            {renderImageControl(
+                                __('Image après', 'gt-fse-widgets-ctv'),
+                                selectImageAfter,
+                                (newId) => setAttributes({ selectImageAfter: newId }),
+                                'selectImageAfterUrl'
+                            )}
+                        </PanelBody>
+
+                        <PanelBody title={__('Bouton recherche', 'gt-fse-widgets-ctv')} initialOpen={false} >
+                            {renderColorPalette(__('Couleur du texte', 'gt-fse-widgets-ctv'), 'buttonText')}
+                            {renderColorPalette(__('Couleur du fond', 'gt-fse-widgets-ctv'), 'buttonBackground')}
+                            {renderImageControl(__('Image Before Button', 'gt-fse-widgets-ctv'), buttonImageBefore, (newId) => setAttributes({ buttonImageBefore: newId }), 'buttonImageBeforeUrl')}
+                            {renderImageControl(__('Image After Button', 'gt-fse-widgets-ctv'), buttonImageAfter, (newId) => setAttributes({ buttonImageAfter: newId }), 'buttonImageAfterUrl')}
+                        </PanelBody>
                     </>
                 )}
             </InspectorControls>
 
             {(isGtResaSticky || isGtResa) ? (
                 <div className="gt-widgets-ctv-resa admin">
-                    <div className="gt-widgets-ctv-resa__hide" style={{ color: closeButtonTextColor, backgroundColor: closeButtonBackgroundColor }}>
-                        {imageUrls.closeImageBeforeUrl && renderMaskedImage(imageUrls.closeImageBeforeUrl)}
+                    <div
+                        className="gt-widgets-ctv-resa__hide"
+                        style={{
+                            color: colorObject.closeButtonText,
+                            backgroundColor: colorObject.closeButtonBackground,
+                        }}
+                    >
+                        {imageUrls.closeImageBeforeUrl &&
+                            renderMaskedImage(imageUrls.closeImageBeforeUrl, colorObject.closeButtonText)}
 
                         <RichText
                             tagName="div"
@@ -319,11 +382,21 @@ export default function Edit({ attributes, setAttributes }) {
                             onChange={(newValue) => setAttributes({ closeText: newValue })}
                             placeholder={__('Fermer', 'gt-fse-widgets-ctv')}
                         />
-                        {imageUrls.opencloseImageAfterUrlImageAfterUrl && renderMaskedImage(imageUrls.closeImageAfterUrl)}
 
+                        {imageUrls.closeImageAfterUrl &&
+                            renderMaskedImage(imageUrls.closeImageAfterUrl, colorObject.closeButtonText)}
                     </div>
-                    <div className="gt-widgets-ctv-resa__toggle" style={{ color: openButtonTextColor, backgroundColor: openButtonBackgroundColor }}>
-                        {imageUrls.openImageBeforeUrl && renderMaskedImage(imageUrls.openImageBeforeUrl)}
+
+                    <div
+                        className="gt-widgets-ctv-resa__toggle"
+                        style={{
+                            color: colorObject.openButtonText,
+                            backgroundColor: colorObject.openButtonBackground,
+                        }}
+                    >
+                        {imageUrls.openImageBeforeUrl &&
+                            renderMaskedImage(imageUrls.openImageBeforeUrl, colorObject.openButtonText)}
+
                         <RichText
                             tagName="div"
                             className="gt-widgets-ctv-resa__toggle__title"
@@ -331,54 +404,101 @@ export default function Edit({ attributes, setAttributes }) {
                             onChange={(newValue) => setAttributes({ titleText: newValue })}
                             placeholder={__('Organisez vos vacances', 'gt-fse-widgets-ctv')}
                         />
-                        {imageUrls.openImageAfterUrl && renderMaskedImage(imageUrls.openImageAfterUrl)}
 
+                        {imageUrls.openImageAfterUrl &&
+                            renderMaskedImage(imageUrls.openImageAfterUrl, colorObject.openButtonText)}
                     </div>
-                    <form className="gt-widgets-ctv-resa__form" style={{ backgroundColor }}>
-                        <div className="gt-widgets-ctv-resa__form__entry gt-widgets-ctv-resa__form__entry--ranges" style={{ color: inputTextColor }}>
-                            {imageUrls.inputImageBeforeUrl && renderMaskedImage(imageUrls.inputImageBeforeUrl)}
+
+                    <form
+                        className="gt-widgets-ctv-resa__form"
+                        style={{ backgroundColor: colorObject.background }}
+                    >
+                        {attributes.visibleFields.inputDates && (
+                            <div
+                                className="gt-widgets-ctv-resa__form__entry gt-widgets-ctv-resa__form__entry--ranges"
+                                style={{ color: colorObject.inputDatesText }}
+                            >
+                                {imageUrls.inputImageBeforeUrl &&
+                                    renderMaskedImage(imageUrls.inputImageBeforeUrl, colorObject.inputDatesImage)}
+                                <RichText
+                                    tagName="div"
+                                    className="gtInputLike"
+                                    value={attributes.inputButtonText}
+                                    onChange={(newValue) =>
+                                        setAttributes({ inputButtonText: newValue })
+                                    }
+                                    placeholder={__('Arrivée / Départ...', 'gt-fse-widgets-ctv')}
+                                />
+                                {imageUrls.inputImageAfterUrl &&
+                                    renderMaskedImage(imageUrls.inputImageAfterUrl, colorObject.inputDatesImage)}
+                            </div>
+                        )}
+                        {attributes.visibleFields.persons && (
+                            <div
+                                className="gt-widgets-ctv-resa__form__entry gt-widgets-ctv-resa__form__entry--personnes"
+                                style={{ color: colorObject.personsText }}
+                            >
+                                {imageUrls.selectImageBeforeUrl &&
+                                    renderMaskedImage(imageUrls.selectImageBeforeUrl, colorObject.personsImage)}
+
+                                <select>
+                                    <option value="">1 personne</option>
+                                    <option value="2" selected>
+                                        2 personnes
+                                    </option>
+                                    <option value="3">3 personnes</option>
+                                    <option value="4">4 personnes</option>
+                                    <option value="5">5 personnes</option>
+                                    <option value="6">6 personnes</option>
+                                    <option value="7">7 personnes</option>
+                                    <option value="8">8 personnes</option>
+                                    <option value="9">9 personnes</option>
+                                    <option value="10">10 personnes</option>
+                                </select>
+                                {imageUrls.selectImageAfterUrl &&
+                                    renderMaskedImage(imageUrls.selectImageAfterUrl, colorObject.personsImage)}
+                            </div>
+                        )}
+                        {attributes.visibleFields.type && (
+                            <div className="gt-widgets-ctv-resa__form__entry gt-widgets-ctv-resa__form__entry--type">
+                                {imageUrls.selectImageBeforeUrl &&
+                                    renderMaskedImage(imageUrls.selectImageBeforeUrl, colorObject.typeImage)}
+
+                                <select style={{ color: colorObject.typeText }}>
+                                    <option value="all">Tous</option>
+                                    <option value="accommodation">Location</option>
+                                    <option value="pitch" selected>
+                                        Emplacement
+                                    </option>
+                                </select>
+                                {imageUrls.selectImageAfterUrl &&
+                                    renderMaskedImage(imageUrls.selectImageAfterUrl, colorObject.typeImage)}
+                            </div>
+                        )}
+                        <div
+                            className="gt-widgets-ctv-resa__form__entry gt-widgets-ctv-resa__form__entry--submit"
+                            style={{
+                                backgroundColor: colorObject.buttonBackground,
+                                color: colorObject.buttonText,
+                            }}
+                        >
+                            {imageUrls.buttonImageBeforeUrl &&
+                                renderMaskedImage(imageUrls.buttonImageBeforeUrl, colorObject.buttonText)}
 
                             <RichText
                                 tagName="div"
-                                className='gtInputLike'
-                                value={attributes.inputButtonText}
-                                onChange={(newValue) => setAttributes({ inputButtonText: newValue })}
-                                placeholder={__('Arrivée / Départ...', 'gt-fse-widgets-ctv')}
-                            />
-                            {imageUrls.inputImageAfterUrl && renderMaskedImage(imageUrls.inputImageAfterUrl)}
-
-                        </div>
-                        <div className="gt-widgets-ctv-resa__form__entry gt-widgets-ctv-resa__form__entry--personnes" style={{ color: selectTextColor }}>
-                            {imageUrls.selectImageBeforeUrl && renderMaskedImage(imageUrls.selectImageBeforeUrl)}
-
-                            <select>
-                                <option value="">1 personne</option>
-                                <option value="2" selected>2 personnes</option>
-                                <option value="3">3 personnes</option>
-                                <option value="4">4 personnes</option>
-                                <option value="5">5 personnes</option>
-                                <option value="6">6 personnes</option>
-                                <option value="7">7 personnes</option>
-                                <option value="8">8 personnes</option>
-                                <option value="9">9 personnes</option>
-                                <option value="10">10 personnes</option>
-                            </select>
-                            {imageUrls.selectImageAfterUrl && renderMaskedImage(imageUrls.selectImageAfterUrl)}
-
-                        </div>
-                        <div className="gt-widgets-ctv-resa__form__entry gt-widgets-ctv-resa__form__entry--submit" style={{ backgroundColor: buttonBackgroundColor, color: buttonTextColor }}>
-                            {imageUrls.buttonImageBeforeUrl && renderMaskedImage(imageUrls.buttonImageBeforeUrl)}
-
-                            <RichText
-                                tagName="div"
-                                className='gtButtonLike'
+                                className="gtButtonLike"
                                 value={submitButtonText}
-                                onChange={(newValue) => setAttributes({ submitButtonText: newValue })}
+                                onChange={(newValue) =>
+                                    setAttributes({ submitButtonText: newValue })
+                                }
                                 placeholder={__('Rechercher un séjour', 'gt-fse-widgets-ctv')}
                             />
-                            {imageUrls.buttonImageAfterUrl && renderMaskedImage(imageUrls.buttonImageAfterUrl)}
+                            {imageUrls.buttonImageAfterUrl &&
+                                renderMaskedImage(imageUrls.buttonImageAfterUrl, colorObject.buttonText)}
                         </div>
                     </form>
+
                 </div>
             ) : (
                 <h2 style={{ textAlign: 'center' }}>

@@ -11,57 +11,167 @@
 	"supports": {
 		"html": false,
 		"typography": {
-            "fontSize": true,
-            "fontFamily": true,
-            "lineHeight": true,
+			"fontSize": true,
+			"fontFamily": true,
+			"lineHeight": true,
 			"fontWeight": true
-        }
+		}
 	},
 	"attributes": {
-		"isSearchBar": { "type": "boolean", "default": false },
-		"isList": { "type": "boolean", "default": true },
-		"isProduct": { "type": "boolean", "default": false },
-		"isMap": { "type": "boolean", "default": false },
-		"isTarifs": { "type": "boolean", "default": false },
-		"isSpecialOffers": { "type": "boolean", "default": false },
-		"isNoteMoyenne": { "type": "boolean", "default": false },
-		"isReviews": { "type": "boolean", "default": false },
-		"isSearch": { "type": "boolean", "default": false },
-		"isInventory": { "type": "boolean", "default": false },
-		"isCalendarProduct": { "type": "boolean", "default": false },
-		"isGtResa": { "type": "boolean", "default": false },
-		"isGtResaSticky": { "type": "boolean", "default": false },
-		"maxPersons": { "type": "number", "default": 8 },
-		"productId": { "type": "number", "default": 0 },
-		"dataAttributes": { "type": "string", "default": "" },
-		"backgroundColor": { "type": "string", "default": "" },
-		"buttonBackgroundColor": { "type": "string", "default": "" },
-		"titleText": { "type": "string", "default": "" },
-		"closeText": { "type": "string", "default": "" },
-		"submitButtonText": { "type": "string", "default": "" },
-		"inputButtonText": { "type": "string", "default": "" },
-		"inputTextColor": { "type": "string", "default": "" },
-		"selectTextColor": { "type": "string", "default": "" },
-		"buttonTextColor": { "type": "string", "default": "" },
-		"inputImageBefore": { "type": "number", "default": null },
-		"inputImageAfter": { "type": "number", "default": null },
-		"selectImageBefore": { "type": "number", "default": null },
-		"selectImageAfter": { "type": "number", "default": null },
-		"buttonImageBefore": { "type": "number", "default": null },
-		"buttonImageAfter": { "type": "number", "default": null },
-		"openImageBefore": { "type": "number", "default": null },
-		"openImageAfter": { "type": "number", "default": null },
-		"closeImageBefore": { "type": "number", "default": null },
-		"closeImageAfter": { "type": "number", "default": null },
-		"openButtonTextColor": { "type": "string", "default": "" },
-		"openButtonBackgroundColor": { "type": "string", "default": "" },
-		"closeButtonTextColor": { "type": "string", "default": "" },
-		"closeButtonBackgroundColor": { "type": "string", "default": "" }
+		"isSearchBar": {
+			"type": "boolean",
+			"default": false
+		},
+		"isList": {
+			"type": "boolean",
+			"default": true
+		},
+		"isProduct": {
+			"type": "boolean",
+			"default": false
+		},
+		"isMap": {
+			"type": "boolean",
+			"default": false
+		},
+		"isTarifs": {
+			"type": "boolean",
+			"default": false
+		},
+		"isSpecialOffers": {
+			"type": "boolean",
+			"default": false
+		},
+		"isNoteMoyenne": {
+			"type": "boolean",
+			"default": false
+		},
+		"isReviews": {
+			"type": "boolean",
+			"default": false
+		},
+		"isSearch": {
+			"type": "boolean",
+			"default": false
+		},
+		"isInventory": {
+			"type": "boolean",
+			"default": false
+		},
+		"isCalendarProduct": {
+			"type": "boolean",
+			"default": false
+		},
+		"isGtResa": {
+			"type": "boolean",
+			"default": false
+		},
+		"isGtResaSticky": {
+			"type": "boolean",
+			"default": false
+		},
+		"maxPersons": {
+			"type": "number",
+			"default": 8
+		},
+		"productId": {
+			"type": "number",
+			"default": 0
+		},
+		"dataAttributes": {
+			"type": "string",
+			"default": ""
+		},
+		"titleText": {
+			"type": "string",
+			"default": ""
+		},
+		"closeText": {
+			"type": "string",
+			"default": ""
+		},
+		"submitButtonText": {
+			"type": "string",
+			"default": ""
+		},
+		"inputButtonText": {
+			"type": "string",
+			"default": ""
+		},
+		"colorObject": {
+			"type": "object",
+			"default": {
+				"background": "#ffffff",
+				"closeButtonText": "#333333",
+				"closeButtonBackground": "#cccccc",
+				"openButtonText": "#444444",
+				"openButtonBackground": "#dddddd",
+				"inputDatesText": "#000000",
+				"inputDatesImage": "#666666",
+				"personsText": "#111111",
+				"personsImage": "#777777",
+				"typeText": "#222222",
+				"typeImage": "#888888",
+				"buttonText": "#ffffff",
+				"buttonBackground": "#0000ff"
+			}
+		},
+		"inputImageBefore": {
+			"type": "number",
+			"default": null
+		},
+		"inputImageAfter": {
+			"type": "number",
+			"default": null
+		},
+		"selectImageBefore": {
+			"type": "number",
+			"default": null
+		},
+		"selectImageAfter": {
+			"type": "number",
+			"default": null
+		},
+		"buttonImageBefore": {
+			"type": "number",
+			"default": null
+		},
+		"buttonImageAfter": {
+			"type": "number",
+			"default": null
+		},
+		"openImageBefore": {
+			"type": "number",
+			"default": null
+		},
+		"openImageAfter": {
+			"type": "number",
+			"default": null
+		},
+		"closeImageBefore": {
+			"type": "number",
+			"default": null
+		},
+		"closeImageAfter": {
+			"type": "number",
+			"default": null
+		},
+
+		"visibleFields": {
+			"type": "object",
+			"default": {
+				"ranges": true,
+				"persons": true,
+				"types": true
+			}
+		}
 	},
 	"textdomain": "gt-fse-widgets-ctv",
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
 	"style": "file:./style-index.css",
 	"render": "file:./render.php",
-	"viewScript": ["file:./view.js"]
+	"viewScript": [
+		"file:./view.js"
+	]
 }
