@@ -50,15 +50,10 @@ function Edit({
     isCalendarProduct,
     isGtResa,
     isGtResaSticky,
-    backgroundColor,
-    buttonBackgroundColor,
     dataAttributes,
     titleText,
     closeText,
     submitButtonText,
-    inputTextColor,
-    selectTextColor,
-    buttonTextColor,
     inputImageBefore,
     inputImageAfter,
     selectImageBefore,
@@ -69,10 +64,7 @@ function Edit({
     openImageAfter,
     closeImageBefore,
     closeImageAfter,
-    openButtonTextColor,
-    openButtonBackgroundColor,
-    closeButtonTextColor,
-    closeButtonBackgroundColor
+    colorObject
   } = attributes;
   const options = [{
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Liste', 'gt-fse-widgets-ctv'),
@@ -174,16 +166,21 @@ function Edit({
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_5__.useEffect)(() => {
     fetch('/wp-json/gt-ctv/v1/global-id').then(response => response.json()).then(data => setGlobalId(data)).catch(error => console.error('Error fetching global ID:', error));
   }, []);
-  const handleColorChange = (newColor, attribute) => {
+  const handleColorChange = (field, newColor) => {
     setAttributes({
-      [attribute]: newColor
+      colorObject: {
+        ...attributes.colorObject,
+        // Conservez les anciennes couleurs
+        [field]: newColor // Mettez à jour uniquement la couleur spécifique
+      }
     });
   };
-  const renderColorPalette = (label, colorValue, onChangeCallback) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, label), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ColorPalette, {
-    colors: colors,
-    value: colorValue,
-    onChange: onChangeCallback
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("br", null));
+  const renderColorPalette = (label, field) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, label), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ColorPalette, {
+    colors: colors // Les couleurs récupérées des global settings
+    ,
+    value: colorObject[field],
+    onChange: newColor => handleColorChange(field, newColor)
+  }));
   const renderImageControl = (label, imageId, onChangeCallback, imageUrlKey) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "image-control"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, label), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.MediaUploadCheck, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.MediaUpload, {
@@ -218,13 +215,13 @@ function Edit({
   }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Delete Image', 'gt-fse-widgets-ctv'))));
 
   // Function to render masked images
-  const renderMaskedImage = imageUrl => {
+  const renderMaskedImage = (imageUrl, color) => {
     return imageUrl && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: "masked-image",
       style: {
         maskImage: `url(${imageUrl})`,
         WebkitMaskImage: `url(${imageUrl})`,
-        backgroundColor: 'currentColor',
+        backgroundColor: color || 'currentColor',
         width: '24px',
         // Set an appropriate width/height for your images
         height: '24px'
@@ -258,33 +255,49 @@ function Edit({
     target: "_blank"
   }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Lire la documentation', 'gt-fse-widgets-ctv')))), (isGtResaSticky || isGtResa) && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Global', 'gt-fse-widgets-ctv')
-  }, renderColorPalette((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Couleur du fond', 'gt-fse-widgets-ctv'), backgroundColor, newColor => handleColorChange(newColor, 'backgroundColor'))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
+  }, renderColorPalette((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Couleur du fond', 'gt-fse-widgets-ctv'), 'background')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Bouton ouverture', 'gt-fse-widgets-ctv'),
     initialOpen: false
-  }, renderColorPalette((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Couleur du texte', 'gt-fse-widgets-ctv'), openButtonTextColor, newColor => handleColorChange(newColor, 'openButtonTextColor')), renderColorPalette((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Couleur du fond', 'gt-fse-widgets-ctv'), openButtonBackgroundColor, newColor => handleColorChange(newColor, 'openButtonBackgroundColor')), renderImageControl((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Image avant', 'gt-fse-widgets-ctv'), openImageBefore, newId => setAttributes({
+  }, renderColorPalette((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Couleur du texte', 'gt-fse-widgets-ctv'), 'openButtonText'), renderColorPalette((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Couleur du fond', 'gt-fse-widgets-ctv'), 'openButtonBackground'), renderImageControl((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Image avant', 'gt-fse-widgets-ctv'), openImageBefore, newId => setAttributes({
     openImageBefore: newId
   }), 'openImageBeforeUrl'), renderImageControl((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Image après', 'gt-fse-widgets-ctv'), openImageAfter, newId => setAttributes({
     openImageAfter: newId
   }), 'openImageAfterUrl')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Bouton fermeture', 'gt-fse-widgets-ctv'),
     initialOpen: false
-  }, renderColorPalette((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Couleur du texte', 'gt-fse-widgets-ctv'), closeButtonTextColor, newColor => handleColorChange(newColor, 'closeButtonTextColor')), renderColorPalette((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Couleur du fond', 'gt-fse-widgets-ctv'), closeButtonBackgroundColor, newColor => handleColorChange(newColor, 'closeButtonBackgroundColor')), renderImageControl((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Image avant', 'gt-fse-widgets-ctv'), closeImageBefore, newId => setAttributes({
+  }, renderColorPalette((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Couleur du texte', 'gt-fse-widgets-ctv'), 'closeButtonText'), renderColorPalette((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Couleur du fond', 'gt-fse-widgets-ctv'), 'closeButtonBackground'), renderImageControl((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Image avant', 'gt-fse-widgets-ctv'), closeImageBefore, newId => setAttributes({
     closeImageBefore: newId
   }), 'closeImageBeforeUrl'), renderImageControl((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Image après', 'gt-fse-widgets-ctv'), closeImageAfter, newId => setAttributes({
     closeImageAfter: newId
   }), 'closeImageAfterUrl')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Input Dates', 'gt-fse-widgets-ctv'),
     initialOpen: false
-  }, renderColorPalette((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Couleur du texte', 'gt-fse-widgets-ctv'), inputTextColor, newColor => handleColorChange(newColor, 'inputTextColor')), renderImageControl((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Image avant', 'gt-fse-widgets-ctv'), inputImageBefore, newId => setAttributes({
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
+    variant: attributes.visibleFields.inputDates ? 'primary' : 'secondary',
+    onClick: () => setAttributes({
+      visibleFields: {
+        ...attributes.visibleFields,
+        inputDates: !attributes.visibleFields.inputDates
+      }
+    })
+  }, attributes.visibleFields.inputDates ? (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Masquer', 'gt-fse-widgets-ctv') : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Afficher', 'gt-fse-widgets-ctv')), renderColorPalette((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Couleur du texte', 'gt-fse-widgets-ctv'), 'inputDatesText'), renderColorPalette((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Couleur de l\'image', 'gt-fse-widgets-ctv'), 'inputDatesImage'), renderImageControl((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Image avant', 'gt-fse-widgets-ctv'), inputImageBefore, newId => setAttributes({
     inputImageBefore: newId
   }), 'inputImageBeforeUrl'), renderImageControl((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Image après', 'gt-fse-widgets-ctv'), inputImageAfter, newId => setAttributes({
     inputImageAfter: newId
   }), 'inputImageAfterUrl')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Nombre de personnes', 'gt-fse-widgets-ctv'),
     initialOpen: false
-  }, renderColorPalette((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Couleur du texte', 'gt-fse-widgets-ctv'), selectTextColor, newColor => handleColorChange(newColor, 'selectTextColor')), renderImageControl((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Image Before Select', 'gt-fse-widgets-ctv'), selectImageBefore, newId => setAttributes({
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
+    variant: attributes.visibleFields.persons ? 'primary' : 'secondary',
+    onClick: () => setAttributes({
+      visibleFields: {
+        ...attributes.visibleFields,
+        persons: !attributes.visibleFields.persons
+      }
+    })
+  }, attributes.visibleFields.persons ? (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Masquer', 'gt-fse-widgets-ctv') : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Afficher', 'gt-fse-widgets-ctv')), renderColorPalette((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Couleur du texte', 'gt-fse-widgets-ctv'), 'personsText'), renderColorPalette((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Couleur de l\'image', 'gt-fse-widgets-ctv'), 'personsImage'), renderImageControl((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Image avant', 'gt-fse-widgets-ctv'), selectImageBefore, newId => setAttributes({
     selectImageBefore: newId
-  }), 'selectImageBeforeUrl'), renderImageControl((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Image After Select', 'gt-fse-widgets-ctv'), selectImageAfter, newId => setAttributes({
+  }), 'selectImageBeforeUrl'), renderImageControl((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Image après', 'gt-fse-widgets-ctv'), selectImageAfter, newId => setAttributes({
     selectImageAfter: newId
   }), 'selectImageAfterUrl'), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.__experimentalNumberControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Nombre de personnes max', 'gt-fse-widgets-ctv'),
@@ -294,9 +307,24 @@ function Edit({
     }),
     min: 1
   })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Types d\'hébergements', 'gt-fse-widgets-ctv'),
+    initialOpen: false
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
+    variant: attributes.visibleFields.type ? 'primary' : 'secondary',
+    onClick: () => setAttributes({
+      visibleFields: {
+        ...attributes.visibleFields,
+        type: !attributes.visibleFields.type
+      }
+    })
+  }, attributes.visibleFields.type ? (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Masquer', 'gt-fse-widgets-ctv') : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Afficher', 'gt-fse-widgets-ctv')), renderColorPalette((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Couleur du texte', 'gt-fse-widgets-ctv'), 'typeText'), renderColorPalette((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Couleur de l\'image', 'gt-fse-widgets-ctv'), 'typeImage'), renderImageControl((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Image avant', 'gt-fse-widgets-ctv'), selectImageBefore, newId => setAttributes({
+    selectImageBefore: newId
+  }), 'selectImageBeforeUrl'), renderImageControl((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Image après', 'gt-fse-widgets-ctv'), selectImageAfter, newId => setAttributes({
+    selectImageAfter: newId
+  }), 'selectImageAfterUrl')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Bouton recherche', 'gt-fse-widgets-ctv'),
     initialOpen: false
-  }, renderColorPalette((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Couleur du texte', 'gt-fse-widgets-ctv'), buttonTextColor, newColor => handleColorChange(newColor, 'buttonTextColor')), renderColorPalette((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Couleur du fond', 'gt-fse-widgets-ctv'), buttonBackgroundColor, newColor => handleColorChange(newColor, 'buttonBackgroundColor')), renderImageControl((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Image Before Button', 'gt-fse-widgets-ctv'), buttonImageBefore, newId => setAttributes({
+  }, renderColorPalette((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Couleur du texte', 'gt-fse-widgets-ctv'), 'buttonText'), renderColorPalette((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Couleur du fond', 'gt-fse-widgets-ctv'), 'buttonBackground'), renderImageControl((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Image Before Button', 'gt-fse-widgets-ctv'), buttonImageBefore, newId => setAttributes({
     buttonImageBefore: newId
   }), 'buttonImageBeforeUrl'), renderImageControl((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Image After Button', 'gt-fse-widgets-ctv'), buttonImageAfter, newId => setAttributes({
     buttonImageAfter: newId
@@ -305,10 +333,10 @@ function Edit({
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "gt-widgets-ctv-resa__hide",
     style: {
-      color: closeButtonTextColor,
-      backgroundColor: closeButtonBackgroundColor
+      color: colorObject.closeButtonText,
+      backgroundColor: colorObject.closeButtonBackground
     }
-  }, imageUrls.closeImageBeforeUrl && renderMaskedImage(imageUrls.closeImageBeforeUrl), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.RichText, {
+  }, imageUrls.closeImageBeforeUrl && renderMaskedImage(imageUrls.closeImageBeforeUrl, colorObject.closeButtonText), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.RichText, {
     tagName: "div",
     className: "gt-widgets-ctv-resa__toggle__title",
     value: closeText,
@@ -316,13 +344,13 @@ function Edit({
       closeText: newValue
     }),
     placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Fermer', 'gt-fse-widgets-ctv')
-  }), imageUrls.opencloseImageAfterUrlImageAfterUrl && renderMaskedImage(imageUrls.closeImageAfterUrl)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }), imageUrls.closeImageAfterUrl && renderMaskedImage(imageUrls.closeImageAfterUrl, colorObject.closeButtonText)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "gt-widgets-ctv-resa__toggle",
     style: {
-      color: openButtonTextColor,
-      backgroundColor: openButtonBackgroundColor
+      color: colorObject.openButtonText,
+      backgroundColor: colorObject.openButtonBackground
     }
-  }, imageUrls.openImageBeforeUrl && renderMaskedImage(imageUrls.openImageBeforeUrl), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.RichText, {
+  }, imageUrls.openImageBeforeUrl && renderMaskedImage(imageUrls.openImageBeforeUrl, colorObject.openButtonText), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.RichText, {
     tagName: "div",
     className: "gt-widgets-ctv-resa__toggle__title",
     value: titleText,
@@ -330,17 +358,17 @@ function Edit({
       titleText: newValue
     }),
     placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Organisez vos vacances', 'gt-fse-widgets-ctv')
-  }), imageUrls.openImageAfterUrl && renderMaskedImage(imageUrls.openImageAfterUrl)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("form", {
+  }), imageUrls.openImageAfterUrl && renderMaskedImage(imageUrls.openImageAfterUrl, colorObject.openButtonText)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("form", {
     className: "gt-widgets-ctv-resa__form",
     style: {
-      backgroundColor
+      backgroundColor: colorObject.background
     }
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }, attributes.visibleFields.inputDates && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "gt-widgets-ctv-resa__form__entry gt-widgets-ctv-resa__form__entry--ranges",
     style: {
-      color: inputTextColor
+      color: colorObject.inputDatesText
     }
-  }, imageUrls.inputImageBeforeUrl && renderMaskedImage(imageUrls.inputImageBeforeUrl), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.RichText, {
+  }, imageUrls.inputImageBeforeUrl && renderMaskedImage(imageUrls.inputImageBeforeUrl, colorObject.inputDatesImage), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.RichText, {
     tagName: "div",
     className: "gtInputLike",
     value: attributes.inputButtonText,
@@ -348,12 +376,12 @@ function Edit({
       inputButtonText: newValue
     }),
     placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Arrivée / Départ...', 'gt-fse-widgets-ctv')
-  }), imageUrls.inputImageAfterUrl && renderMaskedImage(imageUrls.inputImageAfterUrl)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }), imageUrls.inputImageAfterUrl && renderMaskedImage(imageUrls.inputImageAfterUrl, colorObject.inputDatesImage)), attributes.visibleFields.persons && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "gt-widgets-ctv-resa__form__entry gt-widgets-ctv-resa__form__entry--personnes",
     style: {
-      color: selectTextColor
+      color: colorObject.personsText
     }
-  }, imageUrls.selectImageBeforeUrl && renderMaskedImage(imageUrls.selectImageBeforeUrl), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("select", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
+  }, imageUrls.selectImageBeforeUrl && renderMaskedImage(imageUrls.selectImageBeforeUrl, colorObject.personsImage), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("select", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
     value: ""
   }, "1 personne"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
     value: "2",
@@ -374,13 +402,26 @@ function Edit({
     value: "9"
   }, "9 personnes"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
     value: "10"
-  }, "10 personnes")), imageUrls.selectImageAfterUrl && renderMaskedImage(imageUrls.selectImageAfterUrl)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }, "10 personnes")), imageUrls.selectImageAfterUrl && renderMaskedImage(imageUrls.selectImageAfterUrl, colorObject.personsImage)), attributes.visibleFields.type && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "gt-widgets-ctv-resa__form__entry gt-widgets-ctv-resa__form__entry--type"
+  }, imageUrls.selectImageBeforeUrl && renderMaskedImage(imageUrls.selectImageBeforeUrl, colorObject.typeImage), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("select", {
+    style: {
+      color: colorObject.typeText
+    }
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
+    value: "all"
+  }, "Tous"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
+    value: "accommodation"
+  }, "Location"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
+    value: "pitch",
+    selected: true
+  }, "Emplacement")), imageUrls.selectImageAfterUrl && renderMaskedImage(imageUrls.selectImageAfterUrl, colorObject.typeImage)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "gt-widgets-ctv-resa__form__entry gt-widgets-ctv-resa__form__entry--submit",
     style: {
-      backgroundColor: buttonBackgroundColor,
-      color: buttonTextColor
+      backgroundColor: colorObject.buttonBackground,
+      color: colorObject.buttonText
     }
-  }, imageUrls.buttonImageBeforeUrl && renderMaskedImage(imageUrls.buttonImageBeforeUrl), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.RichText, {
+  }, imageUrls.buttonImageBeforeUrl && renderMaskedImage(imageUrls.buttonImageBeforeUrl, colorObject.buttonText), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.RichText, {
     tagName: "div",
     className: "gtButtonLike",
     value: submitButtonText,
@@ -388,7 +429,7 @@ function Edit({
       submitButtonText: newValue
     }),
     placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Rechercher un séjour', 'gt-fse-widgets-ctv')
-  }), imageUrls.buttonImageAfterUrl && renderMaskedImage(imageUrls.buttonImageAfterUrl)))) : (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", {
+  }), imageUrls.buttonImageAfterUrl && renderMaskedImage(imageUrls.buttonImageAfterUrl, colorObject.buttonText)))) : (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", {
     style: {
       textAlign: 'center'
     }
@@ -545,7 +586,7 @@ module.exports = window["wp"]["i18n"];
   \************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"gt/gt-fse-widgets-ctv","version":"1.1.2","title":"GT Widgets CTOUTVERT","category":"widgets","icon":"welcome-widgets-menus","description":"Un block pour afficher des widgets CTOUTVERT","example":{},"supports":{"html":false,"typography":{"fontSize":true,"fontFamily":true,"lineHeight":true,"fontWeight":true}},"attributes":{"isSearchBar":{"type":"boolean","default":false},"isList":{"type":"boolean","default":true},"isProduct":{"type":"boolean","default":false},"isMap":{"type":"boolean","default":false},"isTarifs":{"type":"boolean","default":false},"isSpecialOffers":{"type":"boolean","default":false},"isNoteMoyenne":{"type":"boolean","default":false},"isReviews":{"type":"boolean","default":false},"isSearch":{"type":"boolean","default":false},"isInventory":{"type":"boolean","default":false},"isCalendarProduct":{"type":"boolean","default":false},"isGtResa":{"type":"boolean","default":false},"isGtResaSticky":{"type":"boolean","default":false},"maxPersons":{"type":"number","default":8},"productId":{"type":"number","default":0},"dataAttributes":{"type":"string","default":""},"backgroundColor":{"type":"string","default":""},"buttonBackgroundColor":{"type":"string","default":""},"titleText":{"type":"string","default":""},"closeText":{"type":"string","default":""},"submitButtonText":{"type":"string","default":""},"inputButtonText":{"type":"string","default":""},"inputTextColor":{"type":"string","default":""},"selectTextColor":{"type":"string","default":""},"buttonTextColor":{"type":"string","default":""},"inputImageBefore":{"type":"number","default":null},"inputImageAfter":{"type":"number","default":null},"selectImageBefore":{"type":"number","default":null},"selectImageAfter":{"type":"number","default":null},"buttonImageBefore":{"type":"number","default":null},"buttonImageAfter":{"type":"number","default":null},"openImageBefore":{"type":"number","default":null},"openImageAfter":{"type":"number","default":null},"closeImageBefore":{"type":"number","default":null},"closeImageAfter":{"type":"number","default":null},"openButtonTextColor":{"type":"string","default":""},"openButtonBackgroundColor":{"type":"string","default":""},"closeButtonTextColor":{"type":"string","default":""},"closeButtonBackgroundColor":{"type":"string","default":""}},"textdomain":"gt-fse-widgets-ctv","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php","viewScript":["file:./view.js"]}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"gt/gt-fse-widgets-ctv","version":"1.1.2","title":"GT Widgets CTOUTVERT","category":"widgets","icon":"welcome-widgets-menus","description":"Un block pour afficher des widgets CTOUTVERT","example":{},"supports":{"html":false,"typography":{"fontSize":true,"fontFamily":true,"lineHeight":true,"fontWeight":true}},"attributes":{"isSearchBar":{"type":"boolean","default":false},"isList":{"type":"boolean","default":true},"isProduct":{"type":"boolean","default":false},"isMap":{"type":"boolean","default":false},"isTarifs":{"type":"boolean","default":false},"isSpecialOffers":{"type":"boolean","default":false},"isNoteMoyenne":{"type":"boolean","default":false},"isReviews":{"type":"boolean","default":false},"isSearch":{"type":"boolean","default":false},"isInventory":{"type":"boolean","default":false},"isCalendarProduct":{"type":"boolean","default":false},"isGtResa":{"type":"boolean","default":false},"isGtResaSticky":{"type":"boolean","default":false},"maxPersons":{"type":"number","default":8},"productId":{"type":"number","default":0},"dataAttributes":{"type":"string","default":""},"titleText":{"type":"string","default":""},"closeText":{"type":"string","default":""},"submitButtonText":{"type":"string","default":""},"inputButtonText":{"type":"string","default":""},"colorObject":{"type":"object","default":{"background":"#ffffff","closeButtonText":"#333333","closeButtonBackground":"#cccccc","openButtonText":"#444444","openButtonBackground":"#dddddd","inputDatesText":"#000000","inputDatesImage":"#666666","personsText":"#111111","personsImage":"#777777","typeText":"#222222","typeImage":"#888888","buttonText":"#ffffff","buttonBackground":"#0000ff"}},"inputImageBefore":{"type":"number","default":null},"inputImageAfter":{"type":"number","default":null},"selectImageBefore":{"type":"number","default":null},"selectImageAfter":{"type":"number","default":null},"buttonImageBefore":{"type":"number","default":null},"buttonImageAfter":{"type":"number","default":null},"openImageBefore":{"type":"number","default":null},"openImageAfter":{"type":"number","default":null},"closeImageBefore":{"type":"number","default":null},"closeImageAfter":{"type":"number","default":null},"visibleFields":{"type":"object","default":{"ranges":true,"persons":true,"types":true}}},"textdomain":"gt-fse-widgets-ctv","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php","viewScript":["file:./view.js"]}');
 
 /***/ })
 

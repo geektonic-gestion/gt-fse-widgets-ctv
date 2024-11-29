@@ -82,14 +82,6 @@
       "type": "string",
       "default": ""
     },
-    "backgroundColor": {
-      "type": "string",
-      "default": ""
-    },
-    "buttonBackgroundColor": {
-      "type": "string",
-      "default": ""
-    },
     "titleText": {
       "type": "string",
       "default": ""
@@ -106,17 +98,23 @@
       "type": "string",
       "default": ""
     },
-    "inputTextColor": {
-      "type": "string",
-      "default": ""
-    },
-    "selectTextColor": {
-      "type": "string",
-      "default": ""
-    },
-    "buttonTextColor": {
-      "type": "string",
-      "default": ""
+    "colorObject": {
+      "type": "object",
+      "default": {
+        "background": "#ffffff",
+        "closeButtonText": "#333333",
+        "closeButtonBackground": "#cccccc",
+        "openButtonText": "#444444",
+        "openButtonBackground": "#dddddd",
+        "inputDatesText": "#000000",
+        "inputDatesImage": "#666666",
+        "personsText": "#111111",
+        "personsImage": "#777777",
+        "typeText": "#222222",
+        "typeImage": "#888888",
+        "buttonText": "#ffffff",
+        "buttonBackground": "#0000ff"
+      }
     },
     "inputImageBefore": {
       "type": "number",
@@ -158,21 +156,13 @@
       "type": "number",
       "default": null
     },
-    "openButtonTextColor": {
-      "type": "string",
-      "default": ""
-    },
-    "openButtonBackgroundColor": {
-      "type": "string",
-      "default": ""
-    },
-    "closeButtonTextColor": {
-      "type": "string",
-      "default": ""
-    },
-    "closeButtonBackgroundColor": {
-      "type": "string",
-      "default": ""
+    "visibleFields": {
+      "type": "object",
+      "default": {
+        "ranges": true,
+        "persons": true,
+        "types": true
+      }
     }
   },
   "textdomain": "gt-fse-widgets-ctv",
