@@ -1,4 +1,5 @@
-import { __ } from '@wordpress/i18n';
+// import { __ } from '@wordpress/i18n';
+import { store, getContext, getElement, getConfig } from '@wordpress/interactivity';
 
 
 (function($){
@@ -92,8 +93,8 @@ import { __ } from '@wordpress/i18n';
                 minDate:opening,
                 calendarCount: $(window).width() < 768 ? 1 : 2,
                 locale:$('html').attr('lang').split('-')[0],
-                cancelLabel:__('Annuler', 'gt-fse-widgets-ctv'),
-                applyLabel:__('Appliquer', 'gt-fse-widgets-ctv'),
+                cancelLabel:"Annuler",
+                applyLabel:"Appliquer",
                 // maxDate:closing > moment() ? closing : null,
                 oninit: function(caleran){
                     let arrival = moment(caleran.config.startDate).format('YYYY-MM-DD');

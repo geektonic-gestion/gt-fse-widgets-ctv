@@ -1,4 +1,9 @@
-<div <?php echo get_block_wrapper_attributes(); ?>>
+
+
+<div 
+	<?php echo get_block_wrapper_attributes(); ?>
+	data-wp-interactive="gt/ctv/widgets"	
+>
 
 	<?php if($attributes['isMap']): ?>
 		<ctv-maps <?php echo $attributes['dataAttributes']; ?> ></ctv-maps>
