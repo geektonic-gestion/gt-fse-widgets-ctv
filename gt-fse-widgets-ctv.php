@@ -4,7 +4,7 @@
  * Description:       Un block pour afficher des widgets CTOUTVERT
  * Requires at least: 6.1
  * Requires PHP:      7.0
- * Version:           1.1.3
+ * Version:           1.1.4
  * Author:            The WordPress Contributors
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -291,12 +291,14 @@ function gt_ctv_add_script() {
     $ctv_id = gt_ctv_get_final_global_id(get_the_ID()); // Default ID if not set
     $id_name = $isGroup ? 'groupId' : 'id';
 
+    $lang = defined('ICL_LANGUAGE_CODE') ? ICL_LANGUAGE_CODE : 'fr';
+
     // Prepare the script
     $script = "
         <script>
             window.ctoutvert = {
                 {$id_name}: {$ctv_id}, 
-                lang: '" . ICL_LANGUAGE_CODE . "',
+                lang: '" . $lang . "',
                 url: 'https://reservation.secureholiday.net/widgets/'
             };
 
