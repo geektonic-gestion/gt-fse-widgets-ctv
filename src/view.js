@@ -4,6 +4,7 @@ import { store, getContext, getElement, getConfig } from '@wordpress/interactivi
 
 (function($){
 
+
     // Check if elements with the class '.gt-widgets-ctv-resa' exist on the page
     if (document.querySelectorAll('.gt-widgets-ctv-resa').length == 0) return;
 
@@ -25,6 +26,7 @@ import { store, getContext, getElement, getConfig } from '@wordpress/interactivi
         link.rel = 'stylesheet';
         document.head.appendChild(link);
     }
+
 
     // Load js-cookie script
     loadScript(gtFseCtvVars.pluginUrl + '/lib/jscookies/js.cookies.min.js');
@@ -61,12 +63,23 @@ import { store, getContext, getElement, getConfig } from '@wordpress/interactivi
 
     $(window).on('load', function(){
 
-        
-        let opening = moment();
-        let closing = moment().add(7,'days');
 
-        // Cookies.remove('gt-arrival');
-        // Cookies.remove('gt-departure');
+        const gtOptions = store('gt/options');
+
+        if(gtOptions && gtOptions.state){
+            if(gtOptions.state.opening_date){
+                var opening = moment(gtOptions.state.opening_date);
+            }
+            else{
+                var opening = moment();
+            }
+            if(gtOptions.state.closing_date){
+                var closing = moment(gtOptions.state.closing_date);
+            }
+            else{
+                var closing = moment().add(7,'days');
+            }
+        }
 
 
         if(!Cookies.get('gt-arrival')){
@@ -77,7 +90,7 @@ import { store, getContext, getElement, getConfig } from '@wordpress/interactivi
         }
 
         if(!Cookies.get('gt-departure')){
-            var departure = moment().add(7,'days');
+            var departure = moment(opening).add(7,'days');
         }
         else{
             var departure = moment( Cookies.get('gt-departure') );
@@ -91,6 +104,7 @@ import { store, getContext, getElement, getConfig } from '@wordpress/interactivi
                 endDate:departure,
                 autoCloseOnSelect:true,
                 minDate:opening,
+                maxDate:closing,
                 calendarCount: $(window).width() < 768 ? 1 : 2,
                 locale:$('html').attr('lang').split('-')[0],
                 cancelLabel:"Annuler",

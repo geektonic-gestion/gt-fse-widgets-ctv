@@ -108,19 +108,26 @@ __webpack_require__.r(__webpack_exports__);
     $(this).parent().removeClass('gt-widgets-ctv-resa--open');
   });
   $(window).on('load', function () {
-    let opening = moment();
-    let closing = moment().add(7, 'days');
-
-    // Cookies.remove('gt-arrival');
-    // Cookies.remove('gt-departure');
-
+    const gtOptions = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.store)('gt/options');
+    if (gtOptions && gtOptions.state) {
+      if (gtOptions.state.opening_date) {
+        var opening = moment(gtOptions.state.opening_date);
+      } else {
+        var opening = moment();
+      }
+      if (gtOptions.state.closing_date) {
+        var closing = moment(gtOptions.state.closing_date);
+      } else {
+        var closing = moment().add(7, 'days');
+      }
+    }
     if (!Cookies.get('gt-arrival')) {
       var arrival = moment() > opening ? moment() : opening;
     } else {
       var arrival = moment(Cookies.get('gt-arrival'));
     }
     if (!Cookies.get('gt-departure')) {
-      var departure = moment().add(7, 'days');
+      var departure = moment(opening).add(7, 'days');
     } else {
       var departure = moment(Cookies.get('gt-departure'));
     }
@@ -132,6 +139,7 @@ __webpack_require__.r(__webpack_exports__);
         endDate: departure,
         autoCloseOnSelect: true,
         minDate: opening,
+        maxDate: closing,
         calendarCount: $(window).width() < 768 ? 1 : 2,
         locale: $('html').attr('lang').split('-')[0],
         cancelLabel: "Annuler",
