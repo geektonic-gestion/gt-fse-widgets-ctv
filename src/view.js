@@ -138,6 +138,18 @@ import { store, getContext, getElement, getConfig } from '@wordpress/interactivi
             dateStart: ranges[0],
             dateEnd: ranges[1],
             travelers: $('.gt-widgets-ctv-resa__form__entry--personnes select').val(),
+            productType: $('.gt-widgets-ctv-resa__form__entry--type select').val(),
+        };
+        window.dispatchEvent(new CustomEvent('ctv-widget.open-search', { detail: params }));    
+    });
+
+    $(document).on('click', '.gt-widgets-ctv-resa__form__entry--submit.sticky button', function () {
+        let ranges = $('.gt-widgets-ctv-resa__form__entry--ranges.sticky input').val().split(' - ');
+        let params = {
+            dateStart: ranges[0],
+            dateEnd: ranges[1],
+            travelers: $('.gt-widgets-ctv-resa__form__entry--personnes.sticky select').val(),
+            productType: $('.gt-widgets-ctv-resa__form__entry--type.sticky select').val(),
         };
         window.dispatchEvent(new CustomEvent('ctv-widget.open-search', { detail: params }));    
     });
