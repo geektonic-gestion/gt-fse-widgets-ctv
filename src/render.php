@@ -123,8 +123,8 @@ $colorObject = $attributes['colorObject'] ?? [];
                     <div class="gt-widgets-ctv-resa__form__entry gt-widgets-ctv-resa__form__entry--type <?php echo $attributes['isGtResaSticky'] ? 'sticky' : ''; ?>"
                         style="color: <?php echo esc_attr($colorObject['typeText']); ?>;">
                         <?php if ( !empty( $attributes['selectImageBefore'] ) ): ?>
-						<div class="masked-image" style="background-color: <?php echo esc_attr($colorObject['typeImage']); ?>;  mask-image: url('<?php echo esc_url( wp_get_attachment_url( $attributes['selectImageBefore'] ) ); ?>'); -webkit-mask-image: url('<?php echo esc_url( wp_get_attachment_url( $attributes['selectImageBefore'] ) ); ?>');"></div>
-					<?php endif; ?>
+                            <div class="masked-image" style="background-color: <?php echo esc_attr($colorObject['typeImage']); ?>;  mask-image: url('<?php echo esc_url( wp_get_attachment_url( $attributes['selectImageBefore'] ) ); ?>'); -webkit-mask-image: url('<?php echo esc_url( wp_get_attachment_url( $attributes['selectImageBefore'] ) ); ?>');"></div>
+                        <?php endif; ?>
 
                         <select>
                             <option value="all"><?php esc_html_e('Tous', 'gt'); ?></option>
